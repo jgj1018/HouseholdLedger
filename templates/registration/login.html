@@ -4,7 +4,9 @@
         <!-- 로그인 되어있는 경우 -->
         {% if user.is_active %}
             <h2> Welcome, {{user.username}} </h2>
-            <a href="{% url 'logout' %}">로그아웃</a>
+            <form action="{% url 'rest_logout' %}" method="post">
+                <button type="submit">logout</button>
+            </form>
 
             <!-- 로그인 되어있지 않은 경우 -->
         {% else %}
@@ -13,9 +15,11 @@
             <p>ID나 비밀번호가 일치하지 않습니다.</p>
         {% endif %}
             <!-- 로그인 폼 -->
-            <form method="post" action="{% url 'login' %}">
+            <form method="post" action="{% url 'rest_login' %}">
                 {% csrf_token %}
                 <input type="hidden" name="next" value="" />
+                <input type="text" name="email">
+                <input type="text" name="password">
                 {{ form.as_p }}
                 <button type="submit">로그인</button>
             </form>
