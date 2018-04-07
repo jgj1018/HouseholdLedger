@@ -85,8 +85,12 @@ WSGI_APPLICATION = 'HouseholdLedger.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django',
+        'USER': 'root',
+        'PASSWORD': 'password',
+        'HOST': '172.17.0.2',
+        'PORT': '3306',
     }
 }
 
@@ -159,3 +163,5 @@ ACCOUNT_EMAIL_REQUIRED = True
 #ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_AUTHENTICATION = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+ALLOWED_HOSTS = ['guest', 'localhost', '127.0.0.1']
