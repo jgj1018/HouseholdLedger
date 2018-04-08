@@ -2,20 +2,8 @@
     {% block content %}
 
         <!-- 로그인 되어있는 경우 -->
-        {% if user.is_active %}
-            <h2> Welcome, {{user.username}} </h2>
-            <form action="{% url 'rest_logout' %}" method="post">
-                <button type="submit">logout</button>
-            </form>
-
-            <!-- 로그인 되어있지 않은 경우 -->
-        {% else %}
-        {% if form.errors %}
-            <!-- 에러발생시 -->
-            <p>ID나 비밀번호가 일치하지 않습니다.</p>
-        {% endif %}
             <!-- 로그인 폼 -->
-            <form method="post" action="{% url 'rest_login' %}">
+            <form id="loginForm">
                 {% csrf_token %}
                 <input type="hidden" name="next" value="" />
                 <input type="text" name="email">
@@ -24,5 +12,41 @@
                 <button type="submit">로그인</button>
             </form>
 
-        {% endif %}
+        <script>
+           window.addEventListener("load", function () {
+  function sendData() {
+    let XHR = new XMLHttpRequest();
+
+    // Bind the FormData object and the form element
+    let FD = new FormData(form);
+
+    // Define what happens on successful data submission
+    XHR.addEventListener("load", function(event,code) {
+        if(event.target.status >= 400){
+            alert('error')
+        }
+        if(event.target.status == 200){
+            alert('success')
+        }
+    });
+
+
+    // Set up our request
+    XHR.open("POST", "{% url 'rest_login' %}");
+
+    // The data sent is what the user provided in the form
+    XHR.send(FD);
+  }
+
+  // Access the form element...
+  let form = document.getElementById("loginForm");
+
+  // ...and take over its submit event.
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    sendData();
+  });
+});
+        </script>
     {% endblock %}
