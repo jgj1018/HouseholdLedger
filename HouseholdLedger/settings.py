@@ -25,7 +25,7 @@ SECRET_KEY = 'nl)itz7d-+*y6az&^c%o6bvs!kyo5n3(g&ve885#-5+set95_v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -89,7 +89,7 @@ DATABASES = {
         'NAME': 'django',
         'USER': 'root',
         'PASSWORD': 'password',
-        'HOST': '172.17.0.2',
+        'HOST': '172.20.0.2',
         'PORT': '3306',
     }
 }
@@ -164,4 +164,5 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_AUTHENTICATION = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-ALLOWED_HOSTS = ['guest', 'localhost', '127.0.0.1']
+#ALLOWED_HOSTS = ['guest', 'localhost', '127.0.0.1']
+
