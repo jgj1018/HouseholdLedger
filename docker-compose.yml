@@ -4,9 +4,10 @@ services:
  web:
   build: .
   working_dir: /code/HouseholdLedger
-  command: python3 manage.py runserver 0.0.0.0:8000
+  command: bash -c "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
   volumes:
    - $PWD:/code/HouseholdLedger
+  tty: true
   ports:
    - "8000:8000"
   depends_on:
@@ -19,9 +20,10 @@ services:
    - "3306:3306"
   environment:
    MYSQL_ROOT_PASSWORD: password
-   # MYSQL_DATABASE: django
+   MYSQL_DATABASE: django
    # MYSQL_USER: root
    # MYSQL_PASSWORD: password
   volumes:
    - /usr/local/mysql_volumes/data/:/var/lib/mysql
    - /usr/local/mysql_volumes/conf.d/:/etc/mysql/conf.d
+  tty: true
