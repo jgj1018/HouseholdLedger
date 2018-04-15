@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    'rest_auth.registration'
+    'rest_auth.registration',
+    'home'
 ]
 
 MIDDLEWARE = [
@@ -89,7 +90,7 @@ DATABASES = {
         'NAME': 'django',
         'USER': 'root',
         'PASSWORD': 'password',
-        'HOST': '172.20.0.2',
+        'HOST': 'db',
         'PORT': '3306',
     }
 }
@@ -164,5 +165,13 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_AUTHENTICATION = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-#ALLOWED_HOSTS = ['guest', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['guest', 'localhost', '127.0.0.1']
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'basic': {
+            'type': 'basic'
+        }
+    },
+}
 
