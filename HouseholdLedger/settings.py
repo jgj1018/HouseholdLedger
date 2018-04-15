@@ -25,7 +25,7 @@ SECRET_KEY = 'nl)itz7d-+*y6az&^c%o6bvs!kyo5n3(g&ve885#-5+set95_v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -174,3 +174,4 @@ SWAGGER_SETTINGS = {
         }
     },
 }
+
