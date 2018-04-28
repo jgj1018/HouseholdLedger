@@ -165,7 +165,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_AUTHENTICATION = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-ALLOWED_HOSTS = ['guest', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
