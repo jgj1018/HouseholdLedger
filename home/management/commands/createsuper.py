@@ -5,4 +5,6 @@ from django.contrib.auth.models import User
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        User.objects.create_superuser('admin','admin@admin.com','gring21!')
+        print('Create Super-User')
+        if not User.objects.filter(username='admin').exists():
+            User.objects.create_superuser('admin','admin@admin.com','gring21!')
