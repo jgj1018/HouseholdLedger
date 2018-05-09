@@ -6,7 +6,7 @@ from home.serializer import UserSerializer
 
 
 def home(request):
-    return render(request, 'registration/login.html')
+    return render(request, 'base.html')
 
 
 class UserViewSet(viewsets.ModelViewSet):
