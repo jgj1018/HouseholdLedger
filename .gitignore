@@ -20,8 +20,6 @@ selenium-debug.log
 .eslintignore
 .eslintrc.js
 .postcssrc.js
-build/
-config/
 index.html
 log/
 postgres/
