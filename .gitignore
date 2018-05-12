@@ -23,7 +23,7 @@ selenium-debug.log
 index.html
 log/
 postgres/
-src/
-static/
-test/
+
+
+
 webpack-stats.json
