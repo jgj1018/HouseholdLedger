@@ -1,7 +1,12 @@
 <template>
   <div class="hello">
     <div>
-      <accounting-input></accounting-input>
+      <accounting-input @renew-book="renewBook">
+      <TransactionType slot="debit-transaction-type" type="credit"></TransactionType>
+      <TransactionType slot="credit-transaction-type" type="debit"></TransactionType>
+
+      </accounting-input>
+
     </div>
     <table>
       <thead>
@@ -29,8 +34,14 @@
 import AccountingInput from './AccountingInput'
 import Accounting from '../vo/Accounting'
 import Transaction from '../vo/Transaction'
+import TransactionType from '../slot/TransactionType'
 export default {
   name: 'AccountingBooks',
+  methods: {
+    renewBook: function (response) {
+      console.log(response)
+    }
+  },
   data () {
     return {
       accountings: [
@@ -50,7 +61,9 @@ export default {
       ]
     }
   },
-  components: {AccountingInput}
+  created () {
+  },
+  components: {TransactionType, AccountingInput}
 
 }
 </script>
