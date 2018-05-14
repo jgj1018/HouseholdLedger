@@ -34,7 +34,7 @@ export default {
       this.test = 'GETIT'
       EventBus.pass(this.test)
     },
-    onSubmit: function () {
+    onSubmit: async function () {
       let cost = this.costAmount
       let name = this.transactionName
       if (isNaN(cost)) {
@@ -49,11 +49,12 @@ export default {
       let credit = new Accounting(cost, this.creditType)
       let debit = new Accounting(cost, this.debitType)
       let transAction = new Transaction(name, debit, credit)
-      axios.post('url', transAction).then((response) => {
-        this.$emit('renew-book', response)
-      }).catch((err) => {
-        console.log('err', err)
-      })
+      try {
+        let param = await axios.post('url', transAction)
+        this.$emit('renew-book', param)
+      } catch (e) {
+        console.log('err', e)
+      }
     }
   },
   created () {
