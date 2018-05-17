@@ -17,6 +17,7 @@
 import EventBus from '../EventBus.js'
 import Accounting from '../vo/Accounting'
 import Transaction from '../vo/Transaction'
+import Api from '../config/Api'
 import axios from 'axios'
 export default {
   name: 'Test',
@@ -50,7 +51,7 @@ export default {
       let debit = new Accounting(cost, this.debitType)
       let transAction = new Transaction(name, debit, credit)
       try {
-        let param = await axios.post('url', transAction)
+        let param = await axios.post(Api.put.inputTransaction, transAction)
         this.$emit('renew-book', param)
       } catch (e) {
         console.log('err', e)
