@@ -31,13 +31,11 @@
 </template>
 
 <script>
+import AccountingInput from './AccountingInput'
 import Accounting from '../vo/Accounting'
 import Transaction from '../vo/Transaction'
 import TransactionType from '../slot/TransactionType'
-
-import AccountingInput from './AccountingInput'
 export default {
-
   name: 'AccountingBooks',
   methods: {
     renewBook: function (response) {
