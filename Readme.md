@@ -1,6 +1,6 @@
-# householdledger
+# house
 
-> A Vue.js project
+> house
 
 ## Build Setup
 
