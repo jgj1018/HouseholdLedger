@@ -10,6 +10,7 @@
 
 <script>
 import EventBus from '../EventBus.js'
+
 export default {
   name: 'TransactionType',
   props: ['type'],

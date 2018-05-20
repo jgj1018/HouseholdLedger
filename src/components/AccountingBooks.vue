@@ -20,12 +20,17 @@
       <tbody>
         <tr v-for="(record, idx) in accountings" :key="idx">
           <td>{{record.transactionName}}</td>
-          <td>{{record.debit.transactionType}}</td>
-          <td>{{record.debit.costAmount}}</td>
           <td>{{record.credit.transactionType}}</td>
           <td>{{record.credit.costAmount}}</td>
+          <td>{{record.debit.transactionType}}</td>
+          <td>{{record.debit.costAmount}}</td>
+
         </tr>
+
       </tbody>
+      <div>
+
+      </div>
     </table>
   </div>
 </template>
@@ -35,6 +40,8 @@ import AccountingInput from './AccountingInput'
 import Accounting from '../vo/Accounting'
 import Transaction from '../vo/Transaction'
 import TransactionType from '../slot/TransactionType'
+import axios from 'axios'
+import Api from '../config/Api'
 export default {
   name: 'AccountingBooks',
   methods: {
@@ -47,21 +54,25 @@ export default {
       accountings: [
         new Transaction(
           'record1',
-          new Accounting(1000, 'type1-b'),
+          new Accounting(1000, 'type1-a'),
 
-          new Accounting(1000, 'type1-c')
+          new Accounting(1000, 'type1-b')
+
         ),
-        new Transaction(
-          'record2',
-          new Accounting(2000, 'type2-b'),
+        {
+          transactionName: 'record2',
+          debit: new Accounting(2000, 'type2-b'),
 
-          new Accounting(2000, 'type2-c')
+          credit: new Accounting(2000, 'type2-c')
 
-        )
+        }
       ]
     }
   },
-  created () {
+  created: async function () {
+    let data = await axios.get(Api.get.getTransactions)
+
+    this.accountings = data.data
   },
   components: {TransactionType, AccountingInput}
 

@@ -1,13 +1,21 @@
 const host = ''
+
+const getUri = {
+  method: 'get',
+  getTransactions: {
+    uri: 'transaction'
+  }
+}
+
 const putUri = {
   method: 'put',
   inputTransaction: {
     uri: 'transaction'
   }
 }
+
 const api = {
-  get: {
-  },
+  get: makeProxy(getUri),
   put: makeProxy(putUri)
 }
 
