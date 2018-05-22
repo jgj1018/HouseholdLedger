@@ -2,8 +2,8 @@
   <div class="hello">
     <div>
       <accounting-input @renew-book="renewBook">
-      <TransactionType slot="debit-transaction-type" type="credit"></TransactionType>
-      <TransactionType slot="credit-transaction-type" type="debit"></TransactionType>
+      <TransactionType slot="debit-transaction-type" type="credit" v-bind:transactionTypes="transactionTypes.credit"></TransactionType>
+      <TransactionType slot="credit-transaction-type" type="debit" v-bind:transactionTypes="transactionTypes.debit"></TransactionType>
 
       </accounting-input>
 
@@ -66,12 +66,15 @@ export default {
           credit: new Accounting(2000, 'type2-c')
 
         }
-      ]
+      ],
+      transactionTypes: []
     }
   },
   created: async function () {
-    let data = await axios.get(Api.get.getTransactions)
+    let types = await axios.get('http://localhost:8000/boot/')
+    this.transactionTypes = types.data
 
+    let data = axios.get(Api.get.getTransactions)
     this.accountings = data.data
   },
   components: {TransactionType, AccountingInput}
