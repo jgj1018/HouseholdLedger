@@ -14,11 +14,14 @@
 </template>
 
 <script>
-import EventBus from '../EventBus.js'
-import Accounting from '../vo/Accounting'
-import Transaction from '../vo/Transaction'
-import Api from '../config/Api'
+
 import axios from 'axios'
+
+import EventBus from '../EventBus.js'
+import Api from '../config/Api.js'
+import Accounting from '../vo/Accounting.js'
+import Transaction from '../vo/Transaction.js'
+
 export default {
   name: 'Test',
   data () {

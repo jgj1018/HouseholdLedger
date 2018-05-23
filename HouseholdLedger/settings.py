@@ -45,7 +45,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'rest_auth.registration',
     'webpack_loader',
-    'home'
+    'home',
+    'custom_serializer',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -56,8 +58,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
-
+CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'HouseholdLedger.urls'
 
 TEMPLATES = [

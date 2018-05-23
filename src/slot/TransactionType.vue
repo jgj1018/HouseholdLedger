@@ -2,23 +2,20 @@
         <select @change="select"
         :data-type="type">
           <option value=""></option>
-          <option :value="item"
+          <option :value="item.code"
           v-for="(item, idx) in options" :key="idx"
-          >{{item}}</option>
+          >{{item.name}}</option>
         </select>
 </template>
 
 <script>
 import EventBus from '../EventBus.js'
+
 export default {
   name: 'TransactionType',
-  props: ['type'],
+  props: ['type', 'transactionTypes'],
   data () {
     return {
-      transactionTypes: {
-        'credit': [1, 2, 3],
-        'debit': [4, 5, 6]
-      }
     }
   },
   methods: {
@@ -31,7 +28,7 @@ export default {
   },
   computed: {
     options: function () {
-      return this.transactionTypes[this.type]
+      return this.transactionTypes
     }
   },
   created () {

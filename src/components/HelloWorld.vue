@@ -85,6 +85,7 @@
 
 <script>
 import AccountingInput from './AccountingInput'
+
 export default {
   name: 'Test',
   data () {
