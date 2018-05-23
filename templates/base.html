@@ -1,12 +1,21 @@
-<!-- ./templates/my_project/base.html -->
+{#<!-- ./templates/my_project/base.html -->#}
+{#{% load render_bundle from webpack_loader %}#}
+{#<html>#}
+{#  <body>#}
+{#    {% block content %}#}
+{#      <div id="app"></div>#}
+{#    {% endblock %}#}
+{#      {% render_bundle 'manifest' 'js' %}#}
+{#        {% render_bundle 'vendor' 'js' %}#}
+{#    {% render_bundle 'app' %}#}
+{#  </body>#}
+{#</html>#}
 {% load render_bundle from webpack_loader %}
 <html>
   <body>
     {% block content %}
-      <div id="app"></div>
+ <div id="app"></div>
     {% endblock %}
-      {% render_bundle 'manifest' 'js' %}
-        {% render_bundle 'vendor' 'js' %}
     {% render_bundle 'app' %}
   </body>
 </html>
