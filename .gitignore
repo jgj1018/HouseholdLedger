@@ -19,7 +19,6 @@ selenium-debug.log
 *.sln
 log/
 postgres/
-
-
-
+.gitignore
+*.pyc
 webpack-stats.json
