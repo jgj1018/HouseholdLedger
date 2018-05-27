@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'rest_auth.registration',
     'webpack_loader',
-    'custom_serializer',
     'corsheaders',
     #application list
     'home.apps.HomeConfig',
