@@ -19,7 +19,7 @@ selenium-debug.log
 *.sln
 log/
 postgres/
-
+package-lock.json
 
 
 webpack-stats.json
