@@ -10,36 +10,42 @@ describe('AccountingBooks.vue', () => {
   let cmp = null
   let testData
   beforeEach(() => {
-  })
-  it('Api called', () => {
-    testData = [
-      new Transaction(
-        'test_record1',
-        new Accounting(3000, 'test_type1-a'),
-
-        new Accounting(4000, 'type1-b')
-      ),
-      new Transaction(
-        'test_record2',
-        new Accounting(5000, 'test_type2-c'),
-
-        new Accounting(6000, 'type2-d')
-
-      )
-    ]
-    mockAxios.get.mockImplementationOnce(() =>
+    mockAxios.get.mockImplementation(() =>
       Promise.resolve({
         data: testData
       })
     )
+  })
+  it('Api called', async () => {
+    testData = [
+      new Transaction(
+        'record1',
+        new Accounting(1000, 'type1-a'),
+
+        new Accounting(1000, 'type1-b')
+
+      ),
+      {
+        transactionName: 'record2',
+        debit: new Accounting(2000, 'type2-b'),
+
+        credit: new Accounting(2000, 'type2-c')
+
+      }
+    ]
+
     cmp = shallow(AccountingBooks)
 
     expect(mockAxios.get).toHaveBeenCalledTimes(1)
     // Within cmp.vm, we can access all Vue instance methods
-    expect(mockAxios.get).toBeCalledWith(Api.get.getTransactions)
+    expect(mockAxios.get).toBeCalledWith('http://localhost:8000/boot/')
+
   })
+
   describe('AccountingBooks.vue Data Test', () => {
     it('data must be same', () => {
+      expect(mockAxios.get).toBeCalledWith(Api.get.getTransactions)
+
       expect(cmp.vm.accountings).toEqual(testData)
     })
     it('structure must be same', () => {

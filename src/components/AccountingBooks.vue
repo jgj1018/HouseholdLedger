@@ -37,8 +37,7 @@
 
 <script>
 import AccountingInput from './AccountingInput'
-import Accounting from '../vo/Accounting'
-import Transaction from '../vo/Transaction'
+
 import TransactionType from '../slot/TransactionType'
 import axios from 'axios'
 import Api from '../config/Api'
@@ -51,31 +50,17 @@ export default {
   },
   data () {
     return {
-      accountings: [
-        new Transaction(
-          'record1',
-          new Accounting(1000, 'type1-a'),
-
-          new Accounting(1000, 'type1-b')
-
-        ),
-        {
-          transactionName: 'record2',
-          debit: new Accounting(2000, 'type2-b'),
-
-          credit: new Accounting(2000, 'type2-c')
-
-        }
-      ],
+      accountings: [],
       transactionTypes: []
+
     }
   },
   created: async function () {
     let types = await axios.get('http://localhost:8000/boot/')
     this.transactionTypes = types.data
 
-    let data = axios.get(Api.get.getTransactions)
-    this.accountings = data.data
+    let result = await axios.get(Api.get.getTransactions)
+    this.accountings = result.data
   },
   components: {TransactionType, AccountingInput}
 
