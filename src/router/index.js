@@ -34,7 +34,11 @@ function guard (to, from, next) {
   let tokenCookie = Cookies.get('user-token')
   let token = null
   if (tokenCookie !== null && tokenCookie !== undefined) {
-    token = JSON.parse(tokenCookie).data.token
+    try {
+      token = JSON.parse(tokenCookie).data.token
+    } catch (e) {
+      token = tokenCookie
+    }
   } else {
     next('/login')
   }

@@ -10,9 +10,9 @@ from rest_framework.test import APIRequestFactory
 
 from rest_auth.registration.views import RegisterView
 from rest_auth.registration.app_settings import register_permission_classes
-
-from django.urls import reverse
-
+from rest_framework_jwt.serializers import VerifyJSONWebTokenSerializer
+from django.contrib.auth.models import User
+import time
 
 class APIBasicTests(TestCase):
     """
@@ -49,6 +49,13 @@ class APIBasicTests(TestCase):
     USER_DATA['newsletter_subscribe'] = True
 
     def setUp(self):
+        payload = {
+            "email": self.EMAIL,
+            "username": self.USERNAME,
+            "password": self.PASS
+        }
+
+        resp1 = self.client.post('/account/registration/', data=self.REGISTRATION_DATA, status_code=200)
         pass
 
     @override_settings(REST_USE_JWT=True)
@@ -59,9 +66,39 @@ class APIBasicTests(TestCase):
             "password": self.PASS
         }
 
-        resp1 = self.client.post('/account/registration/', data=self.REGISTRATION_DATA, status_code=200)
-        self.assertEqual(201, resp1.status_code)
         resp = self.client.post('/account/login/', data=payload, status_code=200)
-
         self.assertEqual('token' in resp.data.keys(), True)
+        time.sleep(10)
+
+        token = resp.data['token']
+        data = {'token': token}
+        valid_data = VerifyJSONWebTokenSerializer().validate(data)
+        user = valid_data['user']
+        re_token = self.client.post('/refresh-token/',data=data)
+        refreshed = re_token.data['token']
+        re_data = {'token': refreshed}
+        time.sleep(10)
+        re_valid_data = VerifyJSONWebTokenSerializer().validate(re_data)
+        re_user = re_valid_data['user']
+        self.assertTrue(isinstance(re_user, User))
+
+    @override_settings(REST_USE_JWT=True)
+    def test_refresh_token(self):
+      payload = {
+        "email": self.EMAIL,
+        "username": self.USERNAME,
+        "password": self.PASS
+      }
+      resp = self.client.post('/account/login/', data=payload, status_code=200)
+      token = resp.data['token']
+      data = {'token': token}
+      resp2 = self.client.get('/boot/', data= data)
+      self.assertEqual(200, resp2.status_code)
+      for i in range(0, 5):
+          token = resp2.data['token']
+          data2 = {'token': token}
+          resp3 = self.client.get('/boot/', data= data2)
+          self.assertEqual(200, resp3.status_code)
+          time.sleep(5)
+          resp2 = resp3
 

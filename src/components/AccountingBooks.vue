@@ -39,7 +39,7 @@
 import AccountingInput from './AccountingInput'
 
 import TransactionType from '../slot/TransactionType'
-import axios from 'axios'
+import Http from '../config/Http'
 import Api from '../config/Api'
 export default {
   name: 'AccountingBooks',
@@ -56,10 +56,10 @@ export default {
     }
   },
   created: async function () {
-    let types = await axios.get('http://localhost:8000/boot/')
+    let types = await Http.get('http://0.0.0.0:8000/boot/')
     this.transactionTypes = types.data
 
-    let result = await axios.get(Api.get.getTransactions)
+    let result = await Http.get(Api.get.getTransactions)
     this.accountings = result.data
   },
   components: {TransactionType, AccountingInput}

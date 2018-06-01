@@ -59,6 +59,7 @@ MIDDLEWARE = [
   'django.contrib.messages.middleware.MessageMiddleware',
   'django.middleware.clickjacking.XFrameOptionsMiddleware',
   'corsheaders.middleware.CorsMiddleware',
+  'middleware.authCheck.JwtExpiCheck'
 ]
 CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'HouseholdLedger.urls'
@@ -143,8 +144,9 @@ WEBPACK_LOADER = {
 
 # Configure the JWTs to expire after 1 hour, and allow users to refresh near-expiration tokens
 JWT_AUTH = {
-  'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=1),
+  'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=10),
   'JWT_ALLOW_REFRESH': True,
+
 }
 
 # Make JWT Auth the default authentication mechanism for Django
@@ -221,5 +223,5 @@ import sys
 
 if 'test' in sys.argv:
 
-  DATABASES['default'] =DATABASES['test']
+   DATABASES['default'] =DATABASES['test']
 
