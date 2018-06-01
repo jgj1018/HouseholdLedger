@@ -12,10 +12,10 @@ class JwtExpiCheck():
     def __call__(self, request):
 
         path = request.path
-        is_exist = self.is_exist(path)
+
         response = None
         try:
-            if is_exist:
+            if self.is_passible(path):
                 response = self.get_response(request)
             elif self.check_jwt(request):
 
@@ -29,7 +29,7 @@ class JwtExpiCheck():
         finally:
             return response
 
-    def is_exist(self, path):
+    def is_passible(self, path):
         is_account = bool(re.match('^\/account\/.+', path))
         is_favicon = bool(re.match('^\/favicon.ico', path))
         is_home = bool(re.match('^\/home\/', path))
