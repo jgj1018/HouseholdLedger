@@ -1,6 +1,9 @@
 <!-- ./templates/my_project/base.html -->
 {% load render_bundle from webpack_loader %}
 <html>
+  <head>
+    <meta name="csrf-token" content="{{  csrf_token }}">
+  </head>
   <body>
     {% block content %}
       <div id="app"></div>

@@ -3,7 +3,7 @@ from rest_framework import viewsets
 # Create your views here.
 from django.contrib.auth.models import User
 from home.serializer import UserSerializer
-from django.http import HttpResponse, JsonResponse
+from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import serializers
 from home.globals import const
@@ -30,4 +30,4 @@ def transaction_types(request):
 
     if request.method == 'GET':
         transaction_type = const.transaction_type
-        return JsonResponse(transaction_type, safe=False)
+        return Response(transaction_type)
