@@ -15,11 +15,11 @@ class JwtExpiCheck():
 
         response = None
         try:
-            if self.is_passible(path):
+            if self._is_passible(path):
                 response = self.get_response(request)
-            elif self.check_jwt(request):
+            elif self._check_jwt(request):
 
-                token = self.get_token(request)
+                token = self._get_token(request)
                 refreshed = RefreshJSONWebTokenSerializer().validate(attrs={'token': token})
                 response = self.get_response(request)
                 response.data['token'] = refreshed['token']
@@ -29,7 +29,7 @@ class JwtExpiCheck():
         finally:
             return response
 
-    def is_passible(self, path):
+    def _is_passible(self, path):
         is_account = bool(re.match('^\/account\/.+', path))
         is_favicon = bool(re.match('^\/favicon.ico', path))
         is_home = bool(re.match('^\/home\/', path))
@@ -38,8 +38,8 @@ class JwtExpiCheck():
         else:
             return False
 
-    def check_jwt(self, request):
-        token = self.get_token(request)
+    def _check_jwt(self, request):
+        token = self._get_token(request)
         data = {'token': token}
         try:
             valid_data = VerifyJSONWebTokenSerializer().validate(data)
@@ -48,7 +48,7 @@ class JwtExpiCheck():
         user = valid_data['user']
         return isinstance(user, User)
 
-    def get_token(self, request):
+    def _get_token(self, request):
         if request.method == 'GET':
             params = request.GET
         else:
