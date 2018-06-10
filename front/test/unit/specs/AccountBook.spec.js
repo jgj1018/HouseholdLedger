@@ -39,7 +39,6 @@ describe('AccountingBooks.vue', () => {
     expect(mockAxios.get).toHaveBeenCalledTimes(1)
     // Within cmp.vm, we can access all Vue instance methods
     expect(mockAxios.get).toBeCalledWith('http://localhost:8000/boot/')
-
   })
 
   describe('AccountingBooks.vue Data Test', () => {

@@ -44,7 +44,7 @@ INSTALLED_APPS = [
   'allauth',
   'allauth.account',
   'rest_auth.registration',
-  'webpack_loader',
+
   'corsheaders',
   # application list
   'home.apps.HomeConfig',
@@ -135,12 +135,6 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/account/login'
 
-WEBPACK_LOADER = {
-  'DEFAULT': {
-    'BUNDLE_DIR_NAME': '',
-    'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
-  }
-}
 
 # Configure the JWTs to expire after 1 hour, and allow users to refresh near-expiration tokens
 JWT_AUTH = {
