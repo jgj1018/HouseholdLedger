@@ -1,10 +1,10 @@
 <template>
   <div class="hello">
     <div>
-      <!--<accounting-input @renew-book="renewBook">-->
-      <!--<TransactionType slot="debit-transaction-type" type="credit" v-bind:transactionTypes="transactionTypes.credit"></TransactionType>-->
-      <!--<TransactionType slot="credit-transaction-type" type="debit" v-bind:transactionTypes="transactionTypes.debit"></TransactionType>-->
-      <!--</accounting-input>-->
+      <accounting-input @renew-book="renewBook">
+      <TransactionType slot="debit-transaction-type" type="credit" v-bind:transactionTypes="transactionTypes.credit"></TransactionType>
+      <TransactionType slot="credit-transaction-type" type="debit" v-bind:transactionTypes="transactionTypes.debit"></TransactionType>
+      </accounting-input>
     </div>
     <br/>
     <br/>
@@ -57,10 +57,9 @@ export default {
     }
   },
   created: async function () {
-    let types = await Http.get('http://192.168.33.1:8000/boot/')
+    let types = await Http.get('http://0.0.0.0:8000/boot/')
     this.transactionTypes = types.data
     //let result = await Http.get(Api.get.getTransactions)
-    //let result = await Http.post('http://0.0.0.0:8000/transaction/')
     let result = await Http.post('http://0.0.0.0:8000/transaction/')
     this.accountings = result.data
   },
