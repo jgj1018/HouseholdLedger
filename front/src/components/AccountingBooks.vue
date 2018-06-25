@@ -1,35 +1,36 @@
 <template>
   <div class="hello">
     <div>
-      <accounting-input @renew-book="renewBook">
-      <TransactionType slot="debit-transaction-type" type="credit" v-bind:transactionTypes="transactionTypes.credit"></TransactionType>
-      <TransactionType slot="credit-transaction-type" type="debit" v-bind:transactionTypes="transactionTypes.debit"></TransactionType>
-
-      </accounting-input>
-
+      <!--<accounting-input @renew-book="renewBook">-->
+      <!--<TransactionType slot="debit-transaction-type" type="credit" v-bind:transactionTypes="transactionTypes.credit"></TransactionType>-->
+      <!--<TransactionType slot="credit-transaction-type" type="debit" v-bind:transactionTypes="transactionTypes.debit"></TransactionType>-->
+      <!--</accounting-input>-->
     </div>
+    <br/>
+    <br/>
     <table>
       <thead>
         <tr>
-          <th>transactionName</th>
-          <th rowspan="2">debit-side</th>
-          <th rowspan="2">credit-side</th>
+          <th>created_at</th>
+          <th>transaction_name</th>
+          <th>cost_amount</th>
+          <th>total_amount</th>
+          <th>category</th>
+          <th>transaction_type</th>
         </tr>
       </thead>
 
       <tbody>
         <tr v-for="(record, idx) in accountings" :key="idx">
-          <td>{{record.transactionName}}</td>
-          <td>{{record.credit.transactionType}}</td>
-          <td>{{record.credit.costAmount}}</td>
-          <td>{{record.debit.transactionType}}</td>
-          <td>{{record.debit.costAmount}}</td>
-
+          <td>{{record.created_at}}</td>
+          <td>{{record.transaction_name}}</td>
+          <td>{{record.cost_amount}}</td>
+          <td>TO DO</td>
+          <td>TO DO</td>
+          <td>{{record.transaction_type}}</td>
         </tr>
-
       </tbody>
       <div>
-
       </div>
     </table>
   </div>
@@ -37,10 +38,10 @@
 
 <script>
 import AccountingInput from './AccountingInput'
-
 import TransactionType from '../slot/TransactionType'
 import Http from '../config/Http'
 import Api from '../config/Api'
+
 export default {
   name: 'AccountingBooks',
   methods: {
@@ -56,10 +57,11 @@ export default {
     }
   },
   created: async function () {
-    let types = await Http.get('http://0.0.0.0:8000/boot/')
+    let types = await Http.get('http://192.168.33.1:8000/boot/')
     this.transactionTypes = types.data
-
-    let result = await Http.get(Api.get.getTransactions)
+    //let result = await Http.get(Api.get.getTransactions)
+    //let result = await Http.post('http://0.0.0.0:8000/transaction/')
+    let result = await Http.post('http://0.0.0.0:8000/transaction/')
     this.accountings = result.data
   },
   components: {TransactionType, AccountingInput}
@@ -82,5 +84,8 @@ li {
 }
 a {
   color: #42b983;
+}
+table {
+  width: 100%;
 }
 </style>

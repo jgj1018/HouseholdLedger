@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import serializers
 from home.globals import const
+from home.models import Transaction
 
 
 def home(request):
@@ -27,7 +28,13 @@ def transaction_types(request):
     get:
     API endpoint that allows users to be viewed or edited.
     """
-
     if request.method == 'GET':
         transaction_type = const.transaction_type
         return Response(transaction_type)
+
+@api_view(['POST'])
+def transaction(request):
+    if request.method == 'POST':
+        trnas_raw_data = Transaction.objects.all()
+        serializer = TransactionSerializer(trnas_raw_data)
+        return Response(serializer.data)

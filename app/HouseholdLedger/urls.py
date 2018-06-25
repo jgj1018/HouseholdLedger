@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^account/registration/', include('rest_auth.registration.urls')),
     url(r'^refresh-token/', refresh_jwt_token),
     url(r'^home/$',views.home, name='home'),
+    url(r'^transaction/$',views.transaction, name='transaction'),
     url(r'^boot/$',views.transaction_types, name='boot'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^', include(router.urls)),
