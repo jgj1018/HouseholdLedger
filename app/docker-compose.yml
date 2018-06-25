@@ -6,8 +6,8 @@ services:
   working_dir: /code/HouseholdLedger
 #  command: bash -c "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000 && python3 manage.py createsuper"
   volumes:
-   - $PWD:/code/HouseholdLedger
-   - $PWD/log/django:/var/log/django
+   - .:/code/HouseholdLedger
+   - ./log/django:/var/log/django
   tty: true
   ports:
    - "8000:8000"
