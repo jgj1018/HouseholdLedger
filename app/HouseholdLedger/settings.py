@@ -138,7 +138,7 @@ LOGIN_REDIRECT_URL = '/account/login'
 
 # Configure the JWTs to expire after 1 hour, and allow users to refresh near-expiration tokens
 JWT_AUTH = {
-  'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=10),
+  'JWT_EXPIRATION_DELTA': datetime.timedelta(minutes=10),
   'JWT_ALLOW_REFRESH': True,
 
 }
