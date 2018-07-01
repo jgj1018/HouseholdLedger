@@ -30,11 +30,10 @@ class JwtExpiCheck():
         is_account = bool(re.match('^/account/.+', path))
         is_favicon = bool(re.match('^/favicon.ico/$', path))
         is_home = bool(re.match('^/home/$', path))
-        is_transaction = bool(re.match('^/transaction/$', path))
         is_index = bool(re.match('^/$', path))
         is_swagger = bool(re.match('^/swagger/$', path))
 
-        if is_account or is_favicon or is_home or is_index or is_swagger or is_transaction:
+        if is_account or is_favicon or is_home or is_index or is_swagger:
             return True
         else:
             return False
