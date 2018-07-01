@@ -10,15 +10,12 @@ class JwtExpiCheck():
         self.get_response = get_response
 
     def __call__(self, request):
-
         path = request.path
-
         response = None
         try:
             if self._is_passible(path):
                 response = self.get_response(request)
             elif self._check_jwt(request):
-
                 token = self._get_token(request)
                 refreshed = RefreshJSONWebTokenSerializer().validate(attrs={'token': token})
                 response = self.get_response(request)
