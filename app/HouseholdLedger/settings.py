@@ -47,7 +47,8 @@ INSTALLED_APPS = [
 
   'corsheaders',
   # application list
-  'home.apps.HomeConfig',
+  'home',
+  'transaction'
 ]
 
 MIDDLEWARE = [
@@ -190,13 +191,13 @@ LOGGING = {
     'debug': {
       'level': 'DEBUG',
       'class': 'logging.FileHandler',
-      'filename': '/var/log/django/debug.log',
+      'filename': './log/django/debug.log',
       'formatter': 'verbose',
     },
     'error': {
       'level': 'ERROR',
       'class': 'logging.FileHandler',
-      'filename': '/var/log/django/error.log',
+      'filename': './log/django/error.log',
       'formatter': 'verbose',
     },
     'console': {

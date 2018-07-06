@@ -3,11 +3,9 @@ from rest_framework import viewsets
 # Create your views here.
 from django.contrib.auth.models import User
 from home.serializer import UserSerializer
-from home.serializer import TransactionSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from home.globals import const
-from home.models import Transaction
 
 
 def home(request):
@@ -32,9 +30,4 @@ def transaction_types(request):
         transaction_type = const.transaction_type
         return Response(transaction_type)
 
-@api_view(['GET'])
-def transaction(request):
-    if request.method == 'GET':
-        trnas_raw_data = Transaction.objects.all()
-        serializer = TransactionSerializer(trnas_raw_data, many=True)
-        return Response(serializer.data)
+
