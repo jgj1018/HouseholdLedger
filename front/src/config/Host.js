@@ -1,7 +1,7 @@
 
 const Host = {
-    host: 'http://localhost',
-    port: '8000'
+  host: 'http://0.0.0.0',
+  port: '8000'
 }
 
 export default Host

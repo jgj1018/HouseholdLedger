@@ -12,6 +12,7 @@
 <script>
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import Host from '../config/Host'
 
 export default {
   name: 'Login',
@@ -25,12 +26,15 @@ export default {
   },
   methods: {
     submitLogin: async function (e) {
-      let resp = await axios.post('http://0.0.0.0:8000/account/login/', {email: this.email, password: this.password})
+      const host = Host.host
+      const port = Host.port
+      let resp = await axios.post(host + ':' + port + '/account/login/', {email: this.email, password: this.password})
       if (resp.data !== undefined) {
         Cookies.set('user-token', resp)
+        this.$router.push({name: 'accounting'})
         this.loginResult = 'SUCCESS'
       } else {
-        this.loginResult = 'SUCCESS'
+        this.loginResult = 'Fail'
       }
     }
   }
