@@ -1,39 +1,29 @@
-const host = ''
+import Host from './Host'
 
-const getUri = {
-  method: 'get',
-  getTransactions: {
-    uri: 'transaction'
-  }
+const account = {
+  login: '/account/login',
+  logout: '/account/logout',
+  register: '/account/registration/'
 }
 
-const putUri = {
-  method: 'put',
-  inputTransaction: {
-    uri: 'transaction'
-  }
+const bootUp = {
+  boot: '/boot/'
 }
 
-const api = {
-  get: makeProxy(getUri),
-  put: makeProxy(putUri)
+const accounting = {
+  transaction: 'transaction',
+  inputTransaction: 'inputTransaction'
 }
 
-const Api = makeProxy(api)
+const Api = {
+  account: concatHost(account),
+  bootUp: concatHost(bootUp),
+  accounting: concatHost(accounting)
+}
 
-function makeProxy (origin) {
-  return new Proxy(origin, {
-    get: function (target, name, receiver) {
-      var rv = target[name]
-      let result = ''
-      if (rv.hasOwnProperty('uri')) {
-        result = `${host}${rv.uri}/${target['method']}`
-      } else {
-        result = rv
-      }
-
-      return result
-    }
-  })
+function concatHost (ips) {
+  const host = Host.host + ':' + Host.port
+  return Object.assign({}, ...Object.keys(ips)
+    .map(k => ({[k]: host + ips[k]})))
 }
 export default Api

@@ -10,15 +10,13 @@
 <script>
 // import Http from './config/Http'
 import axios from 'axios'
-import Host from './config/Host'
+import Api from './config/Api'
 
 export default {
   name: 'App',
   methods: {
     logout: async function () {
-      const host = Host.host
-      const port = Host.port
-      let result = await axios.post(host + ':' + port + '/account/logout/')
+      let result = await axios.post(Api.account.logout)
       if (result.status === 200) {
         this.$router.push({name: 'login'})
       }

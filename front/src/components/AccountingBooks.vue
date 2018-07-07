@@ -40,8 +40,7 @@
 import AccountingInput from './AccountingInput'
 import TransactionType from '../slot/TransactionType'
 import Http from '../config/Http'
-// import Api from '../config/Api'
-import Host from '../config/Host'
+import Api from '../config/Api'
 
 export default {
   name: 'AccountingBooks',
@@ -58,13 +57,9 @@ export default {
     }
   },
   created: async function () {
-    console.dir(Host)
-    const host = Host.host
-    const port = Host.port
-    console.log(host + ':' + port + '/boot/')
-    let types = await Http.get(host + ':' + port + '/boot/')
+    let types = await Http.get(Api.bootUp.boot)
     this.transactionTypes = types.data
-    let result = await Http.post(host + ':' + port + '/transaction/')
+    let result = await Http.post(Api.accounting.transaction)
     this.accountings = result.data
   },
   components: {TransactionType, AccountingInput}

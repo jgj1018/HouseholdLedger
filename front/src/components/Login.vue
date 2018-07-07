@@ -12,7 +12,7 @@
 <script>
 import Http from '../config/Http'
 import Cookies from 'js-cookie'
-import Host from '../config/Host'
+import Api from '../config/Api'
 
 export default {
   name: 'Login',
@@ -26,9 +26,7 @@ export default {
   },
   methods: {
     submitLogin: async function (e) {
-      const host = Host.host
-      const port = Host.port
-      let resp = await Http.post(host + ':' + port + '/account/login/', {email: this.email, password: this.password})
+      let resp = await Http.post(Api.account.login, {email: this.email, password: this.password})
       if (resp.data !== undefined) {
         Cookies.set('user-token', resp)
         this.$router.push({name: 'accounting'})
