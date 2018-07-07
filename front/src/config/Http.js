@@ -34,6 +34,12 @@ axios.interceptors.request.use(function (config) {
 // Add a response interceptor
 axios.interceptors.response.use(function (response) {
   let token = response.data.token
+  let req = response.request
+  if (req.responseURL.toLowerCase().includes('/account/logout') &&
+      req.status === 200) {
+    console.log('logOut')
+    Cookies.remove('user-token')
+  }
 
   if (token !== undefined) {
     let data = {token: token}

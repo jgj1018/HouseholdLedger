@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import Http from '../config/Http'
 import Cookies from 'js-cookie'
 import Host from '../config/Host'
 
@@ -38,7 +38,7 @@ export default {
       const host = Host.host
       const port = Host.port
       try {
-        let resp = await axios.post(host + ':' + port + '/account/registration/',
+        let resp = await Http.post(host + ':' + port + '/account/registration/',
           {username: this.username, email: this.email, password1: this.password1, password2: this.password2})
           .catch((error) => {
             console.dir(error.response.data)
