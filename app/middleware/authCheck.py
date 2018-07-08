@@ -49,9 +49,5 @@ class JwtExpiCheck():
         return isinstance(user, User)
 
     def _get_token(self, request):
-        if request.method == 'GET':
-            params = request.GET
-        else:
-            params = request.POST
-        token = params['token']
+        token = request.META['HTTP_AUTHORIZATION'].replace('Bearer','')
         return token

@@ -29,26 +29,26 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
-  'django.contrib.admin',
-  'django.contrib.auth',
-  'django.contrib.contenttypes',
-  'django.contrib.sessions',
-  'django.contrib.messages',
-  'django.contrib.staticfiles',
-  # RestFul FrameWork
-  'rest_framework',
-  # RestFul FrameWork Swagger
-  'rest_framework_swagger',
-  'rest_auth',
-  'django.contrib.sites',
-  'allauth',
-  'allauth.account',
-  'rest_auth.registration',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    # RestFul FrameWork
+    'rest_framework',
+    # RestFul FrameWork Swagger
+    'rest_framework_swagger',
+    'rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
 
-  'corsheaders',
-  # application list
-  'home',
-  'transaction'
+    'corsheaders',
+    # application list
+    'home',
+    'transaction'
 ]
 
 MIDDLEWARE = [

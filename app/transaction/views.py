@@ -1,11 +1,10 @@
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from transaction.serializer import TransactionSerializer
-from transaction.models import Transaction
+from .models import Transaction
 
-@api_view(['GET'])
-def transaction(request):
-    if request.method == 'GET':
-        trnas_raw_data = Transaction.objects.all()
-        serializer = TransactionSerializer(trnas_raw_data, many=True)
-        return Response(serializer.data)
+# Create your views here.
+from .serializer import TransactionSerializer
+from rest_framework import viewsets
+
+
+class TransactionViewSet(viewsets.ModelViewSet):
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer

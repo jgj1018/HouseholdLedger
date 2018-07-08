@@ -2,9 +2,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import AccountingBooks from '@/components/AccountingBooks'
 import Login from '@/components/Login'
+import Register from '@/components/Register'
+
 import Cookies from 'js-cookie'
 import jwtDecode from 'jwt-decode'
 Vue.use(Router)
+
 const router = new Router({
   routes: [
     {
@@ -13,8 +16,13 @@ const router = new Router({
       component: Login
     },
     {
+      path: '/register',
+      name: 'register',
+      component: Register
+    },
+    {
       path: '/',
-      name: 'accouting',
+      name: 'accounting',
       component: AccountingBooks
     }
   ]
@@ -22,7 +30,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   let path = to.path
   console.log(path)
-  if (path !== '/login') {
+  if (path !== '/login' && path !== '/register') {
     guard(to, from, next)
   } else {
     next()

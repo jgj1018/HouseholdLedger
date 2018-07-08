@@ -30,4 +30,3 @@ def transaction_types(request):
         transaction_type = const.transaction_type
         return Response(transaction_type)
 
-
