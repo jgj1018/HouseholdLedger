@@ -1,8 +1,8 @@
 import Host from './Host'
 
 const account = {
-  login: '/account/login',
-  logout: '/account/logout',
+  login: '/account/login/',
+  logout: '/account/logout/',
   register: '/account/registration/'
 }
 
@@ -11,8 +11,8 @@ const bootUp = {
 }
 
 const accounting = {
-  transaction: 'transaction',
-  inputTransaction: 'inputTransaction'
+  transaction: '/transaction/',
+  inputTransaction: '/inputTransaction/'
 }
 
 const Api = {
