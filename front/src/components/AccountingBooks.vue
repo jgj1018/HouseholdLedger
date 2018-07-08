@@ -59,7 +59,7 @@ export default {
   created: async function () {
     let types = await Http.get(Api.bootUp.boot)
     this.transactionTypes = types.data
-    let result = await Http.post(Api.accounting.transaction)
+    let result = await Http.get(Api.accounting.transaction)
     this.accountings = result.data
   },
   components: {TransactionType, AccountingInput}

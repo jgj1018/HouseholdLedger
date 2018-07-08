@@ -10,22 +10,8 @@ axios.interceptors.request.use(function (config) {
       token = tokenCookie
     }
   }
-  if (config.method === 'get') {
-    config.params = (config.params !== undefined) ? config.params : {}
-    if (token !== null) {
-      config.params.token = token
-    }
-    console.log('ToKEN GET')
-    console.log(config.params.token)
-  } else {
-    config.data = (config.data !== undefined) ? config.data : {}
-    if (token !== null) {
-      config.data.token = token
-    }
-    console.log('ToKEN POST')
-    console.log(config.data.token)
-  }
 
+  config.headers.common['Authorization'] = 'Bearer' + token
   return config
 }, function (error) {
   // Do something with request error

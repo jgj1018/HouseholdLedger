@@ -48,6 +48,7 @@ INSTALLED_APPS = [
   'corsheaders',
   # application list
   'home.apps.HomeConfig',
+  'transaction'
 ]
 
 MIDDLEWARE = [

@@ -22,6 +22,7 @@ schema_view = get_swagger_view(url='http:/0.0.0.0:8000/')
 
 from home import views
 from rest_framework import routers
+from transaction.urls import router as transaction_url
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
@@ -34,7 +35,7 @@ urlpatterns = [
     url(r'^account/registration/', include('rest_auth.registration.urls')),
     url(r'^refresh-token/', refresh_jwt_token),
     url(r'^home/$',views.home, name='home'),
-    url(r'^transaction/$',views.transaction, name='transaction'),
+    url(r'^transaction/$', include(transaction_url.urls)),
     url(r'^boot/$',views.transaction_types, name='boot'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^', include(router.urls)),
