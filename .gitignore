@@ -28,3 +28,4 @@ webpack-stats.json
 
 */*/*/*/__pycache__
 front/yarn.lock
+front/src/config/Host.js

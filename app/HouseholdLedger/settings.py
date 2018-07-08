@@ -29,26 +29,26 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
-  'django.contrib.admin',
-  'django.contrib.auth',
-  'django.contrib.contenttypes',
-  'django.contrib.sessions',
-  'django.contrib.messages',
-  'django.contrib.staticfiles',
-  # RestFul FrameWork
-  'rest_framework',
-  # RestFul FrameWork Swagger
-  'rest_framework_swagger',
-  'rest_auth',
-  'django.contrib.sites',
-  'allauth',
-  'allauth.account',
-  'rest_auth.registration',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    # RestFul FrameWork
+    'rest_framework',
+    # RestFul FrameWork Swagger
+    'rest_framework_swagger',
+    'rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
 
-  'corsheaders',
-  # application list
-  'home.apps.HomeConfig',
-  'transaction'
+    'corsheaders',
+    # application list
+    'home',
+    'transaction'
 ]
 
 MIDDLEWARE = [
@@ -191,13 +191,13 @@ LOGGING = {
     'debug': {
       'level': 'DEBUG',
       'class': 'logging.FileHandler',
-      'filename': '/var/log/django/debug.log',
+      'filename': './log/django/debug.log',
       'formatter': 'verbose',
     },
     'error': {
       'level': 'ERROR',
       'class': 'logging.FileHandler',
-      'filename': '/var/log/django/error.log',
+      'filename': './log/django/error.log',
       'formatter': 'verbose',
     },
     'console': {

@@ -10,4 +10,3 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
                   'email',
                   'groups'
                   )
-
