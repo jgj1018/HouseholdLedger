@@ -219,5 +219,5 @@ import sys
 
 if 'test' in sys.argv:
 
-   DATABASES['default'] =DATABASES['test']
+   DATABASES['default'] = DATABASES['test']
 

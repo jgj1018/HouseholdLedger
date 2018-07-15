@@ -13,3 +13,6 @@ transaction_type = {
   'debit': debit_type, 'credit': credit_type
 }
 
+budget_type = (
+  {'01': 'balance'}, {'02': 'cache'}, {'03': 'insurance'}, {'04': "stock"}
+)

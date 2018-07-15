@@ -1,18 +1,18 @@
 from django.test import TestCase, override_settings
-from django.contrib.auth import get_user_model
-from django.core import mail
-from django.conf import settings
-from django.utils.encoding import force_text
-
-from allauth.account import app_settings as account_app_settings
 from rest_framework import status
-from rest_framework.test import APIRequestFactory
+from rest_framework.test import  APIClient
 
-from rest_auth.registration.views import RegisterView
-from rest_auth.registration.app_settings import register_permission_classes
 from rest_framework_jwt.serializers import VerifyJSONWebTokenSerializer
 from django.contrib.auth.models import User
 import time
+
+
+def register():
+    client = APIClient()
+
+    resp = client.post('/account/registration/', data=APIBasicTests.REGISTRATION_DATA, status_code=200)
+    assert resp.status_code == status.HTTP_201_CREATED
+
 
 class APIBasicTests(TestCase):
     """
@@ -48,14 +48,11 @@ class APIBasicTests(TestCase):
     USER_DATA = BASIC_USER_DATA.copy()
     USER_DATA['newsletter_subscribe'] = True
 
-    def setUp(self):
-        payload = {
-            "email": self.EMAIL,
-            "username": self.USERNAME,
-            "password": self.PASS
-        }
 
-        resp1 = self.client.post('/account/registration/', data=self.REGISTRATION_DATA, status_code=200)
+
+    def setUp(self):
+        register()
+
         pass
 
     @override_settings(REST_USE_JWT=True)
@@ -91,14 +88,12 @@ class APIBasicTests(TestCase):
       }
       resp = self.client.post('/account/login/', data=payload, status_code=200)
       token = resp.data['token']
-      data = {'token': token}
-      resp2 = self.client.get('/boot/', data= data)
-      self.assertEqual(200, resp2.status_code)
+      resp2 = self.client.get('/boot/', **{'HTTP_AUTHORIZATION': 'Bearer'+token})
+      self.assertEqual(status.HTTP_200_OK, resp2.status_code)
       for i in range(0, 5):
           token = resp2.data['token']
-          data2 = {'token': token}
-          resp3 = self.client.get('/boot/', data= data2)
-          self.assertEqual(200, resp3.status_code)
+          resp3 = self.client.get('/boot/', **{'HTTP_AUTHORIZATION': 'Bearer'+token})
+          self.assertEqual(status.HTTP_200_OK, resp3.status_code)
           time.sleep(5)
           resp2 = resp3
 
