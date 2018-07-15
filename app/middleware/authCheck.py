@@ -16,14 +16,22 @@ class JwtExpiCheck():
             if self._is_passible(path):
                 response = self.get_response(request)
             elif self._check_jwt(request):
-                token = self._get_token(request)
-                refreshed = RefreshJSONWebTokenSerializer().validate(attrs={'token': token})
                 response = self.get_response(request)
-                response.data['token'] = refreshed['token']
-                response.status = status.HTTP_200_OK
+                if isinstance(response, Response):
+                    response.status = status.HTTP_200_OK
+                    token = self._get_token(request)
+                    refreshed = RefreshJSONWebTokenSerializer().validate(attrs={'token': token})
+                    data = response.data
+                    response.data = {'data': data, 'token': refreshed['token']}
+
+                    # you need to change private attribute `_is_render`
+                    # to call render second time
+                    response._is_rendered = False
+                    response.render()
         except Exception as e:
             response = Response(status=status.HTTP_403_FORBIDDEN)
         finally:
+
             return response
 
     def _is_passible(self, path):

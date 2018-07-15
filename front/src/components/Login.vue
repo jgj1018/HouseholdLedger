@@ -35,6 +35,7 @@ export default {
         this.loginResult = 'Fail'
       }
     }
+
   }
 }
 </script>

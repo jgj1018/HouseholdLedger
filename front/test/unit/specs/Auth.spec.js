@@ -1,26 +1,25 @@
 import { mount } from 'vue-test-utils'
 import Login from '@/components/Login'
-import mockAxios from 'axios' // axios here is the mock from above!
+import Api from '../../../src/config/Api'
+import Http from '../../../src/config/Http'
 
 describe('Login.vue', () => {
   let cmp = null
+  const createCmp = propsData => mount(Login, { propsData })
+  cmp = createCmp({})
+  let postSpy = jest.spyOn(Http, 'post')
 
-  beforeEach(() => {
-    mockAxios.post.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: {token: 'TOKEN'}
-      })
-    )
-  })
   it('Login called', async () => {
-    cmp = mount(Login)
+    const spy = jest.spyOn(cmp.vm, 'submitLogin')
+
+    cmp.update()
     cmp.setData({'email': 'admin@admin.com'})
     cmp.setData({'password': 'gring21!'})
     expect(cmp.vm.email).toBe('admin@admin.com')
     expect(cmp.vm.password).toBe('gring21!')
-    const result = await cmp.vm.submitLogin()
 
-    expect(cmp.vm.loginResult).toEqual('SUCCESS')
-    expect(mockAxios.post).toBeCalledWith('http://0.0.0.0:8000/account/login/', {'email': 'admin@admin.com', 'password': 'gring21!'})
+    const el = cmp.find('#loginForm').trigger('submit')
+    expect(cmp.vm.submitLogin).toBeCalled()
+    expect(await postSpy).toHaveBeenCalledWith(Api.account.login, {'email': 'admin@admin.com', 'password': 'gring21!'})
   })
 })

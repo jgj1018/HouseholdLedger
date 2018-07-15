@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^home/$',home_views.home, name='home'),
     url(r'^asset/', include((transaction_url.urls, 'asset'))),
     url(r'^boot/$',home_views.transaction_types, name='boot'),
+    url(r'^budget-type/$', home_views.budget_types, name='budget_type'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^refresh-token/', refresh_jwt_token),
 

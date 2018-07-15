@@ -24,9 +24,21 @@ class UserViewSet(viewsets.ModelViewSet):
 def transaction_types(request):
     """
     get:
-    API endpoint that allows users to be viewed or edited.
+        get TransactionTypeData
     """
     if request.method == 'GET':
         transaction_type = const.transaction_type
         return Response(transaction_type)
+
+
+@api_view(['GET'])
+def budget_types(request):
+    """
+    get:
+        get BudgetTypeData
+    """
+    if request.method == 'GET':
+        budget_type = const.budget_type
+
+        return Response(budget_type)
 

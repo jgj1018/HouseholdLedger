@@ -32,8 +32,26 @@ class BudgetSerializer(serializers.ModelSerializer):
         :param value:
         :return value:
         """
+        budget_type = self.retrieve_budget_type(value)
+        if budget_type is not None :
+            return value
+        raise serializers.ValidationError("Invalid Type")
+
+    def to_representation(self, obj):
+        budget = obj
+        tmp =  self.retrieve_budget_type(obj.budget_type)
+        budget_type = ''
+        if tmp is not None:
+            budget_type = tmp['name']
+
+        return {
+            'amount': budget.amount,
+            'budget_type': budget_type
+        }
+
+    def retrieve_budget_type(self, budget):
         budget_type = const.budget_type
         for b_type in budget_type:
-            if value in b_type:
-                return value
-        raise serializers.ValidationError("Invalid Type")
+            if budget == b_type['code']:
+                return b_type
+        return None

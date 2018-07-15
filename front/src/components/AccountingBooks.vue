@@ -58,7 +58,7 @@ export default {
   },
   created: async function () {
     let types = await Http.get(Api.bootUp.boot)
-    this.transactionTypes = types.data
+    this.transactionTypes = types.data['data']
     let result = await Http.get(Api.accounting.transaction)
     this.accountings = result.data
   },

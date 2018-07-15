@@ -14,5 +14,6 @@ transaction_type = {
 }
 
 budget_type = (
-  {'01': 'balance'}, {'02': 'cache'}, {'03': 'insurance'}, {'04': "stock"}
+  {'code' : '01', 'name': 'balance'}, {'code': '02', 'name': 'cache'},
+  {'code': '03', 'name': 'insurance'}, {'code': '04', 'name': "stock"}
 )
