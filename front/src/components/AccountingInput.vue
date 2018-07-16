@@ -19,7 +19,6 @@ import Http from '../config/Http'
 
 import EventBus from '../EventBus.js'
 import Api from '../config/Api.js'
-import Accounting from '../vo/Accounting.js'
 import Transaction from '../vo/Transaction.js'
 
 export default {
@@ -39,20 +38,20 @@ export default {
       EventBus.pass(this.test)
     },
     onSubmit: async function () {
-      let cost = this.costAmount
-      let name = this.transactionName
-      if (isNaN(cost)) {
+      let cost_amount = parseInt(this.costAmount)
+      let transaction_name = this.transactionName
+      let credit_type = this.creditType
+      let debit_type = this.debitType
+      if (isNaN(cost_amount)) {
         alert('Please only input Number ')
       }
-      if (name.length < 1) {
+      if (transaction_name.length < 1) {
         alert('Please input transActionName')
       }
-      if (this.creditType.length < 1 && this.debitType.length < 0) {
-        alert('Please select at least one transaction-type')
-      }
-      let credit = new Accounting(cost, this.creditType)
-      let debit = new Accounting(cost, this.debitType)
-      let transAction = new Transaction(name, debit, credit)
+      // TODO: temporary type. logic will be added.
+      let transaction_type = 1
+      let user_id = 1
+      let transAction = new Transaction(user_id, transaction_name, cost_amount, transaction_type)
       try {
         let param = await Http.post(Api.accounting.inputTransaction, transAction)
         this.$emit('renew-book', param)
