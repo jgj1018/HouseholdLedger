@@ -7,18 +7,25 @@ const account = {
 }
 
 const bootUp = {
-  boot: '/boot/'
+  boot: '/boot/',
+  getBudgetType: '/budget-type/'
 }
 
 const accounting = {
   transaction: '/transaction/',
-  inputTransaction: '/inputTransaction/'
+  inputTransaction: '/asset/transaction/'
 }
 
+const budget = {
+  create: '/asset/budget/',
+  list: '/asset/budget/'
+
+}
 const Api = {
   account: concatHost(account),
   bootUp: concatHost(bootUp),
-  accounting: concatHost(accounting)
+  accounting: concatHost(accounting),
+  budget: concatHost(budget)
 }
 
 function concatHost (ips) {

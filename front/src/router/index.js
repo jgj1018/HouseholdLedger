@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import AccountingBooks from '@/components/AccountingBooks'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
-
+import Budget from '@/components/Budget'
 import Cookies from 'js-cookie'
 import jwtDecode from 'jwt-decode'
 Vue.use(Router)
@@ -20,6 +20,12 @@ const router = new Router({
       name: 'register',
       component: Register
     },
+    {
+      path: '/set-budget',
+      name: 'Budget',
+      component: Budget
+    },
+
     {
       path: '/',
       name: 'accounting',

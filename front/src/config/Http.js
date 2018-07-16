@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import jwtDecode from 'jwt-decode'
 axios.interceptors.request.use(function (config) {
   let tokenCookie = Cookies.get('user-token')
   let token = null
@@ -10,8 +11,12 @@ axios.interceptors.request.use(function (config) {
       token = tokenCookie
     }
   }
-
-  config.headers.common['Authorization'] = 'Bearer' + token
+  if (token !== null) {
+    config.headers.common['Authorization'] = 'Bearer' + token
+    let userInfo = jwtDecode(token)
+    config.data = (config.data) ? config.data : {}
+    config.data['user'] = userInfo['user_id']
+  }
   return config
 }, function (error) {
   // Do something with request error
@@ -19,10 +24,10 @@ axios.interceptors.request.use(function (config) {
 })
 // Add a response interceptor
 axios.interceptors.response.use(function (response) {
-  let token = response.data.token
+  let token = response.data['token']
   let req = response.request
   if (req.responseURL.toLowerCase().includes('/account/logout') &&
-      req.status === 200) {
+        req.status === 200) {
     console.log('logOut')
     Cookies.remove('user-token')
   }
@@ -40,7 +45,6 @@ axios.interceptors.response.use(function (response) {
   // Do something with response error
   return Promise.reject(error)
 })
-
 export default {
   get (...args) {
     return axios.get(...args)
