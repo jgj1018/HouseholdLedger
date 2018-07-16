@@ -21,13 +21,13 @@
       </thead>
 
       <tbody>
-        <tr v-for="(record, idx) in accountings" :key="idx">
-          <td>{{record.created_at}}</td>
-          <td>{{record.transaction_name}}</td>
-          <td>{{record.cost_amount}}</td>
+        <tr v-for="(record, idx) in accountings.data" :key="idx">
+          <td>{{ record.created_at }}</td>
+          <td>{{ record.transaction_name }}</td>
+          <td>{{ record.cost_amount }}</td>
           <td>TO DO</td>
           <td>TO DO</td>
-          <td>{{record.transaction_type}}</td>
+          <td>{{ record.transaction_type }}</td>
         </tr>
       </tbody>
       <div>
@@ -63,7 +63,6 @@ export default {
     this.accountings = result.data
   },
   components: {TransactionType, AccountingInput}
-
 }
 </script>
 
