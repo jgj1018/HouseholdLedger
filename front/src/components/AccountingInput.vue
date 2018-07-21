@@ -38,20 +38,20 @@ export default {
       EventBus.pass(this.test)
     },
     onSubmit: async function () {
-      let cost_amount = parseInt(this.costAmount)
-      let transaction_name = this.transactionName
-      let credit_type = this.creditType
-      let debit_type = this.debitType
-      if (isNaN(cost_amount)) {
+      let costAmount = parseInt(this.costAmount)
+      let transactionName = this.transactionName
+      // let creditType = this.creditType
+      // let debitType = this.debitType
+      if (isNaN(costAmount)) {
         alert('Please only input Number ')
       }
-      if (transaction_name.length < 1) {
+      if (transactionName.length < 1) {
         alert('Please input transActionName')
       }
       // TODO: temporary type. logic will be added.
-      let transaction_type = 1
-      let user_id = 1
-      let transAction = new Transaction(user_id, transaction_name, cost_amount, transaction_type)
+      let transactionType = 1
+      let userId = 1
+      let transAction = new Transaction(userId, transactionName, costAmount, transactionType)
       try {
         let param = await Http.post(Api.accounting.inputTransaction, transAction)
         this.$emit('renew-book', param)
