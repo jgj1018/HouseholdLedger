@@ -15,19 +15,19 @@
           <th>transaction_name</th>
           <th>cost_amount</th>
           <th>total_amount</th>
-          <th>category</th>
-          <th>transaction_type</th>
+          <th>debit_type</th>
+          <th>credit_type</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr v-for="(record, idx) in accountings" :key="idx">
-          <td>{{record.created_at}}</td>
-          <td>{{record.transaction_name}}</td>
-          <td>{{record.cost_amount}}</td>
+        <tr v-for="(record, idx) in accountings.data" :key="idx">
+          <td>{{ record.created_at }}</td>
+          <td>{{ record.transaction_name }}</td>
+          <td>{{ record.cost_amount }}</td>
           <td>TO DO</td>
-          <td>TO DO</td>
-          <td>{{record.transaction_type}}</td>
+          <td>{{ record.debit_type }}</td>
+          <td>{{ record.credit_type }}</td>
         </tr>
       </tbody>
       <div>
@@ -45,15 +45,15 @@ import Api from '../config/Api'
 export default {
   name: 'AccountingBooks',
   methods: {
-    renewBook: function (response) {
-      console.log(response)
+    renewBook: async function () {
+      let result = await Http.get(Api.accounting.transaction)
+      this.accountings = result.data
     }
   },
   data () {
     return {
       accountings: [],
       transactionTypes: []
-
     }
   },
   created: async function () {
@@ -62,8 +62,9 @@ export default {
     let result = await Http.get(Api.accounting.transaction)
     this.accountings = result.data
   },
-  components: {TransactionType, AccountingInput}
-
+  components: {
+    TransactionType, AccountingInput
+  }
 }
 </script>
 

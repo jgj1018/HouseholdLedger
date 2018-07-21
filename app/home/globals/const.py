@@ -4,9 +4,9 @@ debit_type = (
   {'code': 3, 'name': '지출의 발생'},
 )
 credit_type = (
-  {'code': 4, 'name': '부채의 증가'},
-  {'code': 5, 'name': '자산의 감소'},
-  {'code': 6, 'name': '수입의 발생'},
+  {'code': 1, 'name': '부채의 증가'},
+  {'code': 2, 'name': '자산의 감소'},
+  {'code': 3, 'name': '수입의 발생'},
 )
 
 transaction_type = {

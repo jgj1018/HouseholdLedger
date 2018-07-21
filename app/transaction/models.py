@@ -6,13 +6,14 @@ from django.urls import reverse
 
 
 class Transaction(models.Model):
-    user_id = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     # Primary Key necessary, Or auto generate Id column
     # Only Primary Key can be autoField
     transaction_id = models.BigAutoField(primary_key=True)
     transaction_name = models.CharField(max_length=20)
     cost_amount = models.IntegerField()
-    transaction_type = models.SmallIntegerField()
+    credit_type = models.SmallIntegerField()
+    debit_type = models.SmallIntegerField()
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     # only one auto option can be set
     updated_at = models.DateTimeField(auto_now_add=True)

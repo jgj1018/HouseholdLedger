@@ -12,7 +12,7 @@ const bootUp = {
 }
 
 const accounting = {
-  transaction: '/transaction/',
+  transaction: '/asset/transaction/',
   inputTransaction: '/asset/transaction/'
 }
 
