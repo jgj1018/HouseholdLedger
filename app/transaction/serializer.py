@@ -3,13 +3,16 @@ from transaction.models import Transaction, Budget
 from home.globals import const
 
 class TransactionSerializer(serializers.ModelSerializer):
+    user = serializers.RelatedField
+
     class Meta:
         model = Transaction
-        fields = ('user_id',
+        fields = ('user',
                   'transaction_id',
                   'transaction_name',
                   'cost_amount',
-                  'transaction_type',
+                  'credit_type',
+                  'debit_type',
                   'created_at',
                   'updated_at',
                   )
@@ -24,7 +27,8 @@ class BudgetSerializer(serializers.ModelSerializer):
                  'amount',
                  'budget_type',
                  'created_at',
-                 'updated_at')
+                 'updated_at'
+                  )
 
     def validate_budget_type(self, value):
         """
