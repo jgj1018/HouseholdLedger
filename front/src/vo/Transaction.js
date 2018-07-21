@@ -1,13 +1,10 @@
-import Accouting from './Accounting'
 
 export default class Transaction {
-  constructor (transactionName, debit = {}, credit = {}) {
-    this.transactionName = transactionName
-    if (debit instanceof Accouting) {
-      this.debit = debit
-    }
-    if (credit instanceof Accouting) {
-      this.credit = credit
-    }
+  constructor (userId, transactionName, creditType, debitType, costAmount) {
+    this.user_id = userId
+    this.transaction_name = transactionName
+    this.credit_type = creditType
+    this.debit_type = debitType
+    this.cost_amount = costAmount
   }
 }

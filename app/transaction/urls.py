@@ -18,6 +18,6 @@ from .views import TransactionViewSet, BudgetViewSet
 
 
 router = routers.DefaultRouter()
-router.register(r'transaction', TransactionViewSet, base_name='transaction')
+router.register(r'transaction', TransactionViewSet)
 router.register(r'budget', BudgetViewSet, base_name='budget')
 
