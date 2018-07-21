@@ -45,15 +45,15 @@ import Api from '../config/Api'
 export default {
   name: 'AccountingBooks',
   methods: {
-    renewBook: function (response) {
-      console.log(response)
+    renewBook:async function () {
+      let result = await Http.get(Api.accounting.transaction)
+      this.accountings = result.data
     }
   },
   data () {
     return {
       accountings: [],
       transactionTypes: []
-
     }
   },
   created: async function () {
@@ -62,7 +62,9 @@ export default {
     let result = await Http.get(Api.accounting.transaction)
     this.accountings = result.data
   },
-  components: {TransactionType, AccountingInput}
+  components: {
+    TransactionType, AccountingInput
+  }
 }
 </script>
 
