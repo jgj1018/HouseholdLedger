@@ -6,7 +6,6 @@ yarn-debug.log*
 yarn-error.log*
 /front/test/unit/coverage/*.js
 /front/test/unit/__snapshots__/*.js
-/**/**/*_initial.py
 /front/test/e2e/reports/
 selenium-debug.log
 
