@@ -15,8 +15,8 @@
           <th>transaction_name</th>
           <th>cost_amount</th>
           <th>total_amount</th>
-          <th>transaction_type</th>
-          <th>transaction_type</th>
+          <th>debit_type</th>
+          <th>credit_type</th>
         </tr>
       </thead>
 
