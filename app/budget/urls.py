@@ -14,9 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from rest_framework import routers
-from .views import TransactionViewSet
+from .views import  BudgetViewSet
 
 
 router = routers.DefaultRouter()
-router.register(r'transaction', TransactionViewSet)
+router.register(r'budget', BudgetViewSet, base_name='budget')
 
