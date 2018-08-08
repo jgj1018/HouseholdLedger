@@ -8,7 +8,6 @@
     <slot name="debit-transaction-type" ></slot>
 
     <button @click.prevent="onSubmit">SUBMIT</button>
-    <button id="test" @click="show">Test</button>
     <div id="result">{{test}}</div>
   </div>
 </template>
@@ -33,10 +32,6 @@ export default {
     }
   },
   methods: {
-    show: function () {
-      this.test = 'GETIT'
-      EventBus.pass(this.test)
-    },
     onSubmit: async function () {
       let costAmount = parseInt(this.costAmount)
       let transactionName = this.transactionName

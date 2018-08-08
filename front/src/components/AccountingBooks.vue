@@ -1,38 +1,40 @@
 <template>
-  <div class="hello">
+  <div class="">
+
     <div>
       <accounting-input @renew-book="renewBook">
       <TransactionType slot="debit-transaction-type" type="credit" v-bind:transactionTypes="transactionTypes.credit"></TransactionType>
       <TransactionType slot="credit-transaction-type" type="debit" v-bind:transactionTypes="transactionTypes.debit"></TransactionType>
       </accounting-input>
-    </div>
-    <br/>
-    <br/>
-    <table>
-      <thead>
-        <tr>
-          <th>created_at</th>
-          <th>transaction_name</th>
-          <th>cost_amount</th>
-          <th>total_amount</th>
-          <th>debit_type</th>
-          <th>credit_type</th>
-        </tr>
-      </thead>
+      <br/>
+      <br/>
+      <table>
+        <thead>
+          <tr>
+            <th>created_at</th>
+            <th>transaction_name</th>
+            <th>cost_amount</th>
+            <th>total_amount</th>
+            <th>debit_type</th>
+            <th>credit_type</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        <tr v-for="(record, idx) in accountings.data" :key="idx">
-          <td>{{ record.created_at }}</td>
-          <td>{{ record.transaction_name }}</td>
-          <td>{{ record.cost_amount }}</td>
-          <td>TO DO</td>
-          <td>{{ record.debit_type }}</td>
-          <td>{{ record.credit_type }}</td>
-        </tr>
-      </tbody>
-      <div>
-      </div>
-    </table>
+        <tbody>
+          <tr v-for="(record, idx) in accountings.data" :key="idx">
+            <td>{{ record.created_at }}</td>
+            <td>{{ record.transaction_name }}</td>
+            <td>{{ record.cost_amount }}</td>
+            <td>TO DO</td>
+            <td>{{ record.debit_type }}</td>
+            <td>{{ record.credit_type }}</td>
+          </tr>
+        </tbody>
+        <div>
+        </div>
+      </table>
+    </div>
+
   </div>
 </template>
 
