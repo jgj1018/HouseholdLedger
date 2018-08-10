@@ -3,8 +3,8 @@
     <form id="loginForm" @submit.prevent="submitRegister" method="post">
       <input type="text" v-model="username" placeholder="username">
       <input type="text" v-model="email" placeholder="email">
-      <input type="text" v-model="password1" placeholder="password1">
-      <input type="text" v-model="password2" placeholder="password2">
+      <input type="password" v-model="password1" placeholder="password1">
+      <input type="password" v-model="password2" placeholder="password2">
       <div>
           <ul>
             <li v-bind:key="param" v-for="(messages, param) in errors">

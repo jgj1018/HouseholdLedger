@@ -13,13 +13,13 @@ class JwtExpiCheck():
         path = request.path
         response = None
         try:
-            if self._is_passible(path):
+            if self.__is_passible(path):
                 response = self.get_response(request)
-            elif self._check_jwt(request):
+            elif self.__check_jwt(request):
                 response = self.get_response(request)
                 if isinstance(response, Response):
                     response.status = status.HTTP_200_OK
-                    token = self._get_token(request)
+                    token = self.__get_token(request)
                     refreshed = RefreshJSONWebTokenSerializer().validate(attrs={'token': token})
                     data = response.data
                     response.data = {'data': data, 'token': refreshed['token']}
@@ -34,7 +34,7 @@ class JwtExpiCheck():
 
             return response
 
-    def _is_passible(self, path):
+    def __is_passible(self, path):
         is_account = bool(re.match('^/account/.+', path))
         is_favicon = bool(re.match('^/favicon.ico/$', path))
         is_home = bool(re.match('^/home/$', path))
@@ -46,8 +46,8 @@ class JwtExpiCheck():
         else:
             return False
 
-    def _check_jwt(self, request):
-        token = self._get_token(request)
+    def __check_jwt(self, request):
+        token = self.__get_token(request)
         data = {'token': token}
         try:
             valid_data = VerifyJSONWebTokenSerializer().validate(data)
@@ -56,6 +56,6 @@ class JwtExpiCheck():
         user = valid_data['user']
         return isinstance(user, User)
 
-    def _get_token(self, request):
+    def __get_token(self, request):
         token = request.META['HTTP_AUTHORIZATION'].replace('Bearer','')
         return token

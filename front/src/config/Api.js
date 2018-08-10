@@ -12,13 +12,13 @@ const bootUp = {
 }
 
 const accounting = {
-  transaction: '/asset/transaction/',
-  inputTransaction: '/asset/transaction/'
+  transaction: '/transaction/transaction/',
+  inputTransaction: '/transaction/transaction/'
 }
 
 const budget = {
-  create: '/asset/budget/',
-  list: '/asset/budget/'
+  create: '/budget/budget/',
+  list: '/budget/budget/'
 
 }
 const Api = {

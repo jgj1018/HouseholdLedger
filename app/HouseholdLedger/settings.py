@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'corsheaders',
     # application list
     'home',
-    'transaction'
+    'transaction',
+    'budget'
 ]
 
 MIDDLEWARE = [

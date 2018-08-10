@@ -1,4 +1,4 @@
-from django.test import TestCase, override_settings
+from django.test import TestCase, override_settings, modify_settings
 from rest_framework import status
 from rest_framework.test import  APIClient
 
@@ -7,6 +7,9 @@ from django.contrib.auth.models import User
 import time
 
 
+@modify_settings(MIDDLEWARE={
+    'remove': 'middleware.authCheck.JwtExpiCheck',
+})
 def register():
     client = APIClient()
 
@@ -65,19 +68,6 @@ class APIBasicTests(TestCase):
 
         resp = self.client.post('/account/login/', data=payload, status_code=200)
         self.assertEqual('token' in resp.data.keys(), True)
-        time.sleep(10)
-
-        token = resp.data['token']
-        data = {'token': token}
-        valid_data = VerifyJSONWebTokenSerializer().validate(data)
-        user = valid_data['user']
-        re_token = self.client.post('/refresh-token/',data=data)
-        refreshed = re_token.data['token']
-        re_data = {'token': refreshed}
-        time.sleep(10)
-        re_valid_data = VerifyJSONWebTokenSerializer().validate(re_data)
-        re_user = re_valid_data['user']
-        self.assertTrue(isinstance(re_user, User))
 
     @override_settings(REST_USE_JWT=True)
     def test_refresh_token(self):

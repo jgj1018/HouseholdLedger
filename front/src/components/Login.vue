@@ -2,7 +2,7 @@
   <div class="hello">
     <form id="loginForm" @submit.prevent="submitLogin" method="post">
       <input type="text" v-model="email">
-      <input type="text" v-model="password">
+      <input type="password" v-model="password">
       <button type="submit" >로그인</button>
     </form>
     <div>{{loginResult}}</div>
