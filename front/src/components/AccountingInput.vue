@@ -43,9 +43,7 @@ export default {
       if (transactionName.length < 1) {
         alert('Please input transActionName')
       }
-      // TODO: temporary type. logic will be added.
-      let userId = 1
-      let transAction = new Transaction(userId, transactionName, creditType, debitType, costAmount)
+      let transAction = new Transaction(transactionName, creditType, debitType, costAmount)
       try {
         let param = await Http.post(Api.accounting.inputTransaction, transAction)
         this.$emit('renew-book', param)
