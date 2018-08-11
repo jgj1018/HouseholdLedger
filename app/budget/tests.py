@@ -18,7 +18,7 @@ class BudgetTest(APITestCase):
     @override_settings(REST_USE_JWT=True)
     def test_create_budget(self):
 
-        url = reverse('asset:budget-list')
+        url = reverse('budget:budget-list')
         data = {
             "user": 1,
             "amount": 100,
