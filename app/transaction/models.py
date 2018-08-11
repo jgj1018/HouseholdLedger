@@ -29,7 +29,3 @@ class Transaction(models.Model):
     def get_absolute_url(self):
         # TODO have to set what page should be next.
         return reverse('', args=[str(self.user_id)])
-
-
-
-

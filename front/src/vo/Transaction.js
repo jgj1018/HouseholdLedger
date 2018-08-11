@@ -1,7 +1,6 @@
 
 export default class Transaction {
-  constructor (userId, transactionName, creditType, debitType, costAmount) {
-    this.user_id = userId
+  constructor (transactionName, creditType, debitType, costAmount) {
     this.transaction_name = transactionName
     this.credit_type = creditType
     this.debit_type = debitType
