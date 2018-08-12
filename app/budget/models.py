@@ -5,6 +5,8 @@ class Budget(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     cost_amount = models.IntegerField()
     budget_type = models.CharField(max_length=2)
+    budget_name = models.CharField(max_length=100, default='')
+
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     # only one auto option can be set
     updated_at = models.DateTimeField(auto_now_add=True)
