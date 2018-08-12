@@ -8,7 +8,7 @@ class BudgetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Budget
         fields = ('user',
-                 'amount',
+                 'cost_amount',
                  'budget_type',
                  'created_at',
                  'updated_at'
@@ -33,7 +33,7 @@ class BudgetSerializer(serializers.ModelSerializer):
             budget_type = tmp['name']
 
         return {
-            'amount': budget.amount,
+            'cost_amount': budget.cost_amount,
             'budget_type': budget_type
         }
 

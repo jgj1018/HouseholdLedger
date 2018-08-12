@@ -6,7 +6,7 @@ from .validator import *
 
 
 class Transaction(models.Model):
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, validators=[positive_int_type])
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     # Primary Key necessary, Or auto generate Id column
     # Only Primary Key can be autoField
     transaction_id = models.BigAutoField(primary_key=True)

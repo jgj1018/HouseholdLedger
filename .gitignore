@@ -4,8 +4,8 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-/app/transaction/migrations/
-/app/budget/migrations/
+#/app/transaction/migrations/
+#/app/budget/migrations/
 /front/test/unit/coverage/*.js
 /front/test/unit/__snapshots__/*.js
 /front/test/e2e/reports/
