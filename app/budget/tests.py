@@ -21,7 +21,7 @@ class BudgetTest(APITestCase):
         url = reverse('budget:budget-list')
         data = {
             "user": 1,
-            "amount": 100,
+            "cost_amount": 100,
             "budget_type": "07"
         }
         response = self.client.post(url, data= data, status_code=201)
@@ -29,10 +29,10 @@ class BudgetTest(APITestCase):
         self.assertEqual(Budget.objects.count(), 0)
         data = {
             "user": 1,
-            "amount": 100,
-            "budget_type": "03"
+            "cost_amount": 100,
+            "budget_type": "01"
         }
         resp2 = self.client.post(url, data= data, status_code=201)
         self.assertEqual(resp2.status_code, status.HTTP_201_CREATED)
 
-        self.assertEqual(Budget.objects.get().budget_type, '03')
+        self.assertEqual(Budget.objects.get().budget_type, '01')
