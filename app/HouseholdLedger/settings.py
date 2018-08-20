@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
 
     'corsheaders',
+    'django_filters',
     # application list
     'home',
     'transaction',
@@ -154,6 +155,9 @@ JWT_AUTH = {
 REST_FRAMEWORK = {
   'DEFAULT_AUTHENTICATION_CLASSES': (
     'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+  ),
+  'DEFAULT_FILTER_BACKENDS': (
+    'django_filters.rest_framework.DjangoFilterBackend',
   ),
 }
 AUTHENTICATION_BACKENDS = (

@@ -1,10 +1,10 @@
 from django.test import TestCase, override_settings, modify_settings
 from rest_framework import status
 from rest_framework.test import  APIClient
-
-from rest_framework_jwt.serializers import VerifyJSONWebTokenSerializer
-from django.contrib.auth.models import User
+from transaction.models import Transaction
+from .globals import functions
 import time
+from django.contrib.auth.models import User
 
 
 @modify_settings(MIDDLEWARE={
@@ -15,7 +15,6 @@ def register():
 
     resp = client.post('/account/registration/', data=APIBasicTests.REGISTRATION_DATA, status_code=200)
     assert resp.status_code == status.HTTP_201_CREATED
-
 
 class APIBasicTests(TestCase):
     """
@@ -87,3 +86,12 @@ class APIBasicTests(TestCase):
           time.sleep(5)
           resp2 = resp3
 
+
+class GlobalObjTest(TestCase):
+
+    def test_filter_by_user_id_query_has_where_user_id(self):
+        query_set = functions.filter_by_user_id(Transaction.objects, {'user': 1})
+        query = query_set.query.__str__()
+        self.assertIn('WHERE', query)
+
+        self.assertIn('"user_id" = ', query)
