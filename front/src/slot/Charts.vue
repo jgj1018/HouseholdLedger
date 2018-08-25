@@ -2,12 +2,11 @@
   <div class="small">
     <bar-chart :chart-data="dataset" :height="height"
                ></bar-chart>
-    <button @click="fillData()">Randomize</button>
   </div>
 </template>
 
 <script>
-import BarChart from './BarChart.js'
+import BarChart from '../chartObj/BarChart.js'
 
 export default {
   name: 'Charts',
