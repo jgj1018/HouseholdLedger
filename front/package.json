@@ -99,6 +99,8 @@
     "not ie <= 8"
   ],
   "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/",
     "moduleNameMapper": {
       "^vue$": "vue/dist/vue.common.js"
     },

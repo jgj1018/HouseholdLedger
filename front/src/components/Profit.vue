@@ -30,7 +30,7 @@ import dateFns from 'date-fns'
 import Http from '../config/Http'
 import Api from '../config/Api'
 import axios from 'axios'
-
+import DateRange from '../utils/DateRange'
 import _ from 'lodash'
 
 export default {
@@ -46,19 +46,19 @@ export default {
     }
   },
   methods: {
+
     updateChart: function () {
-      let firstDay = this.year + '-01-01'
-      let lastDay = this.year + '-12-31'
+      let temp = {}
       if (this.month > 0) {
-        firstDay = this.year + `-${this.month}-01`
-        lastDay = dateFns.lastDayOfMonth(new Date(firstDay))
+        temp = DateRange.getDateRange(this.year + `-${this.month}-01`, 'month')
       } else if (this.quarter) {
-        firstDay = dateFns.startOfQuarter(new Date(this.year + `-${this.quarter}-01`))
-        lastDay = dateFns.lastDayOfQuarter(new Date(this.year + `-${this.quarter}-01`))
+        temp = DateRange.getDateRange(this.year + `-${this.quarter}-01`, 'quarter')
+      } else {
+        temp = DateRange.getDateRange(this.year + `-01-01`, 'year')
       }
 
-      let firstDate = dateFns.format(new Date(firstDay), 'YYYY-MM-DD')
-      let lastDate = dateFns.format(new Date(lastDay), 'YYYY-MM-DD')
+      let firstDate = temp['first']
+      let lastDate = temp['last']
 
       this.__getDatas(firstDate, lastDate).then((data) => {
         this.$emit('data-update', data)
@@ -122,9 +122,11 @@ export default {
     Charts
   },
   mounted: async function () {
-    let lastDayOfMonth = dateFns.format(dateFns.lastDayOfMonth(new Date()), 'YYYY-MM-DD')
-    let firstDayOfMonth = dateFns.format(new Date(), 'YYYY-MM-01')
     this.year = dateFns.format(new Date(), 'YYYY')
+    let tmpRange = DateRange.getDateRange(dateFns.format(new Date(), 'YYYY-MM-DD'), 'month')
+    let lastDayOfMonth = tmpRange['first']
+    let firstDayOfMonth = tmpRange['last']
+
     console.log('lastDay', lastDayOfMonth)
     console.log('firstDay', firstDayOfMonth)
     let tmp = await this.__getDatas(firstDayOfMonth, lastDayOfMonth)
