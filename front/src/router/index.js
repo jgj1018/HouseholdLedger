@@ -4,6 +4,8 @@ import AccountingBooks from '@/components/AccountingBooks'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Budget from '@/components/Budget'
+import Profit from '@/components/Profit'
+
 import Cookies from 'js-cookie'
 import jwtDecode from 'jwt-decode'
 Vue.use(Router)
@@ -25,12 +27,17 @@ const router = new Router({
       name: 'Budget',
       component: Budget
     },
-
+    {
+      path: '/profit',
+      name: 'profit',
+      component: Profit
+    },
     {
       path: '/',
       name: 'accounting',
       component: AccountingBooks
     }
+
   ]
 })
 router.beforeEach((to, from, next) => {

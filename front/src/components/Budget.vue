@@ -1,13 +1,14 @@
 <template>
   <div class="hello">
     <form id="loginForm" @submit.prevent="createBudget" method="post">
+      <input type="text" v-model="budgetName" placeholder="budgetName">
       <select v-model="type">
           <option value=""></option>
           <option :value="item.code"
           v-for="(item, idx) in budgetType" :key="idx"
           >{{item.name}}</option>
       </select>
-      <input type="number" v-model="amount" placeholder="amount">
+      <input type="number" v-model="costAmount" placeholder="amount">
       <div>
           <ul>
             <li v-bind:key="param" v-for="(messages, param) in errors">
@@ -28,6 +29,8 @@
 <script>
 import Http from '../config/Http'
 import Api from '../config/Api'
+import Budget from '../vo/BUdget'
+import Charts from './Profit'
 
 export default {
   name: 'Budget',
@@ -35,22 +38,23 @@ export default {
     return {
       budgetType: [],
       type: null,
-      amount: null,
+      budgetName: '',
+      costAmount: null,
       budget: [],
       errors: []
+
     }
   },
   methods: {
     createBudget: async function (e) {
-      let amount = this.amount
-      let type = this.type
-      let data = {'amount': amount, 'budget_type': type}
-      let budgetObj = this
-      Http.post(Api.budget.create, data).then(async function (r) {
+      let budgetObj = new Budget(this.budgetName, this.type, this.costAmount)
+      let budgetVue = this
+
+      Http.post(Api.budget.create, budgetObj).then(async function (r) {
         if (r.status === 201) {
           let budget = await Http.get(Api.budget.list)
           console.log('BUDGET', budget)
-          budgetObj.budget = budget.data['data']
+          budgetVue.budget = budget.data['data']
         }
       }).catch(function (error) {
         console.dir(error.response.data)
@@ -64,7 +68,11 @@ export default {
     let budgetList = await Http.get(Api.budget.list)
     console.dir(budgetList)
     this.budget = budgetList.data['data']
+  },
+  components: {
+    Charts
   }
+
 }
 </script>
 
