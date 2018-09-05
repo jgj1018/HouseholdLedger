@@ -4,6 +4,8 @@
       <ul>
         <router-link tag="li" :to="{name: 'Budget'}">Setting Budget</router-link>
         <router-link tag="li" :to="{name: 'accounting'}">Setting transaction</router-link>
+        <router-link tag="li" :to="{name: 'profit'}">Chart</router-link>
+
       </ul>
 
     </div>
@@ -44,6 +46,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  height: 980px;
+
 }
 ul {
   list-style-type: none;

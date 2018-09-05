@@ -1,4 +1,3 @@
-djangorestframework-jwt
 certifi==2018.1.18
 chardet==3.0.4
 coreapi==2.3.3
@@ -6,9 +5,12 @@ coreschema==0.0.4
 defusedxml==0.5.0
 Django==2.0.4
 django-allauth==0.35.0
+django-cors-headers==2.4.0
+django-filter==2.0.0
 django-rest-auth==0.9.3
 django-rest-swagger==2.1.2
 djangorestframework==3.8.2
+djangorestframework-jwt==1.11.0
 docker==3.2.1
 docker-pycreds==0.2.2
 idna==2.6
@@ -17,6 +19,8 @@ Jinja2==2.10
 MarkupSafe==1.0
 oauthlib==2.0.7
 openapi-codec==1.3.2
+psycopg2==2.7.5
+PyJWT==1.6.4
 python3-openid==3.1.0
 pytz==2018.3
 requests==2.18.4
@@ -27,6 +31,3 @@ uritemplate==3.0.0
 urllib3==1.22
 virtualenv==15.2.0
 websocket-client==0.47.0
-psycopg2>=2.7
-
-django-cors-headers

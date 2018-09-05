@@ -3,8 +3,10 @@
 
     <div>
       <accounting-input @renew-book="renewBook">
-      <TransactionType slot="debit-transaction-type" type="credit" v-bind:transactionTypes="transactionTypes.credit"></TransactionType>
-      <TransactionType slot="credit-transaction-type" type="debit" v-bind:transactionTypes="transactionTypes.debit"></TransactionType>
+      <TransactionType slot="debit-transaction-type" type="debit" v-bind:transactionTypes="transactionTypes.debit"></TransactionType>
+
+      <TransactionType slot="credit-transaction-type" type="credit" v-bind:transactionTypes="transactionTypes.credit"></TransactionType>
+
       </accounting-input>
       <br/>
       <br/>

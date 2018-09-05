@@ -14,14 +14,25 @@ axios.interceptors.request.use(function (config) {
   if (token !== null) {
     config.headers.common['Authorization'] = 'Bearer' + token
     let userInfo = jwtDecode(token)
-    config.data = (config.data) ? config.data : {}
-    config.data['user'] = userInfo['user_id']
+    setUserId(config, userInfo['user_id'])
   }
+
+  function setUserId (config, id) {
+    if (config.method.toUpperCase() === 'GET') {
+      config.params = (config.params) ? config.params : {}
+      config.params['user'] = id
+    } else {
+      config.data = (config.data) ? config.data : {}
+      config.data['user'] = id
+    }
+  }
+
   return config
 }, function (error) {
   // Do something with request error
   return Promise.reject(error)
 })
+
 // Add a response interceptor
 axios.interceptors.response.use(function (response) {
   let token = response.data['token']

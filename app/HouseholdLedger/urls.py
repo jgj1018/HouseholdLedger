@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'^account/registration/', include('rest_auth.registration.urls')),
     url(r'^refresh-token/', refresh_jwt_token),
     url(r'^home/$',home_views.home, name='home'),
-    url(r'^transaction/', include(transaction_url.urls), name='transaction'),
+    url(r'^transaction/', include((transaction_url.urls, 'transaction'),  namespace='transaction'), name='transaction'),
     url(r'^budget/', include((budget_url.urls, 'budget'), namespace='budget'), name='budget'),
 
     url(r'^boot/$',home_views.transaction_types, name='boot'),
