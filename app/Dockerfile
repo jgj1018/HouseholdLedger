@@ -6,6 +6,6 @@
  # RUN git clone https://github.com/jgj1018/HouseholdLedger.git
  ADD . $DIRPATH/
  WORKDIR $DIRPATH
- RUn pip install --upgrade pip
+ RUN pip install --upgrade pip
  RUN pip install -r requirements.txt
- RUn pip freeze > requirements.txt
+ RUN pip freeze > requirements.txt
