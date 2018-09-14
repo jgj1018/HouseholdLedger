@@ -159,6 +159,7 @@ REST_FRAMEWORK = {
   'DEFAULT_FILTER_BACKENDS': (
     'django_filters.rest_framework.DjangoFilterBackend',
   ),
+  'DATETIME_FORMAT': "%Y-%m-%d",
 }
 AUTHENTICATION_BACKENDS = (
   # Needed to login by username in Django admin, regardless of `allauth`

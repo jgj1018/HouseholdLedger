@@ -3,6 +3,8 @@ from transaction.models import Transaction
 
 class TransactionSerializer(serializers.ModelSerializer):
     user = serializers.RelatedField
+    created_at = serializers.DateTimeField()
+    updated_at = serializers.DateTimeField()
 
     class Meta:
         model = Transaction

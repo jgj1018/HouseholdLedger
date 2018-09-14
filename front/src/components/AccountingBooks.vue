@@ -1,12 +1,11 @@
 <template>
   <div class="">
-
     <div>
       <accounting-input @renew-book="renewBook">
-      <TransactionType slot="debit-transaction-type" type="debit" v-bind:transactionTypes="transactionTypes.debit"></TransactionType>
-
-      <TransactionType slot="credit-transaction-type" type="credit" v-bind:transactionTypes="transactionTypes.credit"></TransactionType>
-
+        <TransactionType slot="debit-transaction-type" type="debit" v-bind:transactionTypes="transactionTypes.debit">
+        </TransactionType>
+        <TransactionType slot="credit-transaction-type" type="credit" v-bind:transactionTypes="transactionTypes.credit">
+        </TransactionType>
       </accounting-input>
       <br/>
       <br/>
@@ -19,6 +18,7 @@
             <th>total_amount</th>
             <th>debit_type</th>
             <th>credit_type</th>
+            <th>operation</th>
           </tr>
         </thead>
 
@@ -30,6 +30,10 @@
             <td>TO DO</td>
             <td>{{ record.debit_type }}</td>
             <td>{{ record.credit_type }}</td>
+            <td>
+              <button type="button" v-on:click="updateTrns(record.transaction_id)">Update</button>
+              <button type="button" v-on:click="deleteTrns(record.transaction_id)">Delete</button>
+            </td>
           </tr>
         </tbody>
         <div>
@@ -51,6 +55,15 @@ export default {
     renewBook: async function () {
       let result = await Http.get(Api.accounting.transaction)
       this.accountings = result.data
+    },
+    updateTrns: function (event) {
+      alert('test')
+    },
+    deleteTrns: function (trns_id, event) {
+      Http.delete(Api.accounting.transaction + trns_id)
+        .then(response => {
+          this.renewBook()
+        });
     }
   },
   data () {
@@ -62,8 +75,7 @@ export default {
   created: async function () {
     let types = await Http.get(Api.bootUp.boot)
     this.transactionTypes = types.data
-    let result = await Http.get(Api.accounting.transaction)
-    this.accountings = result.data
+    this.renewBook()
   },
   components: {
     TransactionType, AccountingInput
