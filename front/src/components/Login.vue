@@ -11,7 +11,6 @@
 
 <script>
 import Http from '../config/Http'
-import Cookies from 'js-cookie'
 import Api from '../config/Api'
 
 export default {
@@ -27,8 +26,7 @@ export default {
   methods: {
     submitLogin: async function (e) {
       let resp = await Http.post(Api.account.login, {email: this.email, password: this.password})
-      if (resp.data !== undefined) {
-        Cookies.set('user-token', resp)
+      if (resp.data.token !== undefined) {
         this.$router.push({name: 'accounting'})
         this.loginResult = 'SUCCESS'
       } else {

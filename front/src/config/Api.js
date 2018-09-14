@@ -3,7 +3,8 @@ import Host from './Host'
 const account = {
   login: '/account/login/',
   logout: '/account/logout/',
-  register: '/account/registration/'
+  register: '/account/registration/',
+  refreshToken: '/refresh-token/'
 }
 
 const bootUp = {

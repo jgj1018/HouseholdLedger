@@ -73,7 +73,7 @@ export default {
       let accountList = Http.get(Api.accounting.transaction, {'params': param})
       let vm = this
       const result = await axios.all([budgetList, accountList]).then(axios.spread(function (budgetResult, accResult) {
-        let accData = accResult.data.data
+        let accData = accResult.data
         const growth = 1
         const decline = 2
         let profitGrowths = vm.__sumAmount(_.filter(accData, function (o) {
@@ -97,7 +97,7 @@ export default {
           }
         }))
         let grossProfit = profitGrowths - profitDecline
-        let result = { 'budget': vm.__sumAmount(budgetResult.data.data) + grossProfit, 'debit': debitGrowths - debitDecline }
+        let result = { 'budget': vm.__sumAmount(budgetResult.data) + grossProfit, 'debit': debitGrowths - debitDecline }
         result['credit'] = result['budget'] - result['debit']
         result['budget'] = [result['budget']]
         result['credit'] = [result['credit']]

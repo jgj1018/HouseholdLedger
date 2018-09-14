@@ -23,7 +23,7 @@
         </thead>
 
         <tbody>
-          <tr v-for="(record, idx) in accountings.data" :key="idx">
+          <tr v-for="(record, idx) in accountings" :key="idx">
             <td>{{ record.created_at }}</td>
             <td>{{ record.transaction_name }}</td>
             <td>{{ record.cost_amount }}</td>
@@ -36,7 +36,6 @@
         </div>
       </table>
     </div>
-
   </div>
 </template>
 
@@ -62,7 +61,7 @@ export default {
   },
   created: async function () {
     let types = await Http.get(Api.bootUp.boot)
-    this.transactionTypes = types.data['data']
+    this.transactionTypes = types.data
     let result = await Http.get(Api.accounting.transaction)
     this.accountings = result.data
   },

@@ -77,14 +77,19 @@ class APIBasicTests(TestCase):
       }
       resp = self.client.post('/account/login/', data=payload, status_code=200)
       token = resp.data['token']
-      resp2 = self.client.get('/boot/', **{'HTTP_AUTHORIZATION': 'Bearer'+token})
+      resp2 = self.client.get('/boot/', HTTP_AUTHORIZATION='JWT {}'.format(token))
       self.assertEqual(status.HTTP_200_OK, resp2.status_code)
-      for i in range(0, 5):
-          token = resp2.data['token']
-          resp3 = self.client.get('/boot/', **{'HTTP_AUTHORIZATION': 'Bearer'+token})
-          self.assertEqual(status.HTTP_200_OK, resp3.status_code)
-          time.sleep(5)
-          resp2 = resp3
+      # token = resp2.data['token']
+
+      resp3 = self.client.get('/boot/', HTTP_AUTHORIZATION='JWT {}'.format(token))
+      self.assertEqual(status.HTTP_200_OK, resp3.status_code)
+
+      # for i in range(0, 5):
+      #     token = resp2.data['token']
+      #     resp3 = self.client.get('/boot/', HTTP_AUTHORIZATION='JWT {}'.format(token))
+      #     self.assertEqual(status.HTTP_200_OK, resp3.status_code)
+      #     time.sleep(5)
+      #     resp2 = resp3
 
 
 class GlobalObjTest(TestCase):
