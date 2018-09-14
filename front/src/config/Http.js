@@ -10,19 +10,8 @@ axios.interceptors.request.use(function (config) {
   if ((!url.includes('account') && !url.includes(Api.account.refreshToken))) {
     let tokenCookie = Cookies.get('user-token')
 
-<<<<<<< HEAD
     if (tokenCookie !== null && tokenCookie !== undefined) {
       config.headers.common['Authorization'] = JWT_TAG + tokenCookie
-=======
-  function setUserId (config, id) {
-    if (config.method.toUpperCase() === 'GET'
-      || config.method.toUpperCase() === 'DELETE') {
-      config.params = (config.params) ? config.params : {}
-      config.params['user'] = id
-    } else {
-      config.data = (config.data) ? config.data : {}
-      config.data['user'] = id
->>>>>>> master
     }
   }
   return config
