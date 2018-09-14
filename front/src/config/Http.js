@@ -18,7 +18,8 @@ axios.interceptors.request.use(function (config) {
   }
 
   function setUserId (config, id) {
-    if (config.method.toUpperCase() === 'GET') {
+    if (config.method.toUpperCase() === 'GET'
+      || config.method.toUpperCase() === 'DELETE') {
       config.params = (config.params) ? config.params : {}
       config.params['user'] = id
     } else {
@@ -62,6 +63,14 @@ export default {
   },
   post (...args) {
     return axios.post(...args)
+  },
+  put (...args) {
+    return axios.put(...args)
+  },
+  patch (...args) {
+    return axios.patch(...args)
+  },
+  delete (...args) {
+    return axios.delete(...args)
   }
-
 }
