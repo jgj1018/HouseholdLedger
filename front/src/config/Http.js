@@ -1,33 +1,19 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import jwtDecode from 'jwt-decode'
+import Api from './Api'
+import Router from '../router/index'
+const JWT_TAG = 'JWT '
 axios.interceptors.request.use(function (config) {
-  let tokenCookie = Cookies.get('user-token')
-  let token = null
-  if (tokenCookie !== null && tokenCookie !== undefined) {
-    try {
-      token = JSON.parse(tokenCookie).data.token
-    } catch (e) {
-      token = tokenCookie
+  let url = config.url.toLowerCase()
+
+  if ((!url.includes('account') && !url.includes(Api.account.refreshToken))) {
+    let tokenCookie = Cookies.get('user-token')
+
+    if (tokenCookie !== null && tokenCookie !== undefined) {
+      config.headers.common['Authorization'] = JWT_TAG + tokenCookie
     }
   }
-  if (token !== null) {
-    config.headers.common['Authorization'] = 'Bearer' + token
-    let userInfo = jwtDecode(token)
-    setUserId(config, userInfo['user_id'])
-  }
-
-  function setUserId (config, id) {
-    if (config.method.toUpperCase() === 'GET'
-      || config.method.toUpperCase() === 'DELETE') {
-      config.params = (config.params) ? config.params : {}
-      config.params['user'] = id
-    } else {
-      config.data = (config.data) ? config.data : {}
-      config.data['user'] = id
-    }
-  }
-
   return config
 }, function (error) {
   // Do something with request error
@@ -36,27 +22,51 @@ axios.interceptors.request.use(function (config) {
 
 // Add a response interceptor
 axios.interceptors.response.use(function (response) {
-  let token = response.data['token']
+  // let token = response.data['token']
   let req = response.request
-  if (req.responseURL.toLowerCase().includes('/account/logout') &&
-        req.status === 200) {
-    console.log('logOut')
-    Cookies.remove('user-token')
+  let url = req.responseURL.toLowerCase()
+  if ((!url.includes('account') && !url.includes(Api.account.refreshToken))) {
+    let token = Cookies.get('user-token')
+    refreshToken(token)
+  } else {
+    let token = response.data['token']
+    if (!checkTokenExpiration(token)) {
+      Cookies.set('user-token', token)
+    }
   }
 
-  if (token !== undefined) {
-    let data = {token: token}
-    console.log('ToKEN SAVE')
-    console.dir(data)
-    Cookies.set('user-token', {data: data})
-  } else {
-    console.log('ERRR')
-  }
   return response
 }, function (error) {
-  // Do something with response error
-  return Promise.reject(error)
+  if (error.response.status === 400) {
+    Cookies.remove('user-token')
+    Router.push({name: 'login'})
+  }
 })
+
+function checkTokenExpiration (token) {
+  if (token === null || token === undefined) {
+    return true
+  }
+
+  let decoded = jwtDecode(token)
+  let currentTime = new Date().getTime() / 1000
+  console.log(currentTime)
+  console.log(decoded.exp)
+  if (currentTime > decoded.exp) {
+    return true
+  } else {
+    return false
+  }
+}
+
+async function refreshToken (token) {
+  let resp = await axios.post(Api.account.refreshToken, {'token': token})
+  let refreshed = resp.data['token']
+  if (refreshed !== undefined) {
+    Cookies.set('user-token', refreshed)
+  }
+}
+
 export default {
   get (...args) {
     return axios.get(...args)
@@ -72,5 +82,8 @@ export default {
   },
   delete (...args) {
     return axios.delete(...args)
-  }
+  },
+  'refreshToken': refreshToken,
+  'checkTokenExpiration': checkTokenExpiration
+
 }

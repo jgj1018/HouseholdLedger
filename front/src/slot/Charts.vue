@@ -43,7 +43,7 @@ export default {
     this.height = Number(height)
     this.fillData(this.data)
     let vm = this
-    this.$parent.$on('data-update', function(data){
+    this.$parent.$on('data-update', function (data) {
       vm.fillData(data[vm.attr.type])
     })
   }

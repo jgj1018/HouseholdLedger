@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Cookies from 'js-cookie'
+
 import AccountingBooks from '@/components/AccountingBooks'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Budget from '@/components/Budget'
 import Profit from '@/components/Profit'
-
-import Cookies from 'js-cookie'
-import jwtDecode from 'jwt-decode'
+import Http from '../config/Http'
 Vue.use(Router)
 
 const router = new Router({
@@ -40,6 +40,7 @@ const router = new Router({
 
   ]
 })
+
 router.beforeEach((to, from, next) => {
   let path = to.path
   console.log(path)
@@ -52,36 +53,15 @@ router.beforeEach((to, from, next) => {
 
 function guard (to, from, next) {
   let tokenCookie = Cookies.get('user-token')
-  let token = null
-  if (tokenCookie !== null && tokenCookie !== undefined) {
-    try {
-      token = JSON.parse(tokenCookie).data.token
-    } catch (e) {
-      token = tokenCookie
-    }
-  } else {
+  if (tokenCookie === null || tokenCookie === undefined) {
     next('/login')
   }
-  if (checkTokenExpiration(token)) {
+  if (!Http.checkTokenExpiration(tokenCookie)) {
+    Http.refreshToken(tokenCookie)
     next()
   } else {
+    Cookies.remove('user-token')
     next('/login')
-  }
-}
-
-function checkTokenExpiration (token) {
-  if (token === null || token === undefined) {
-    return false
-  }
-
-  let decoded = jwtDecode(token)
-  let currentTime = new Date().getTime() / 1000
-  console.log(currentTime)
-  console.log(decoded.exp)
-  if (currentTime > decoded.exp) {
-    return false
-  } else {
-    return true
   }
 }
 
