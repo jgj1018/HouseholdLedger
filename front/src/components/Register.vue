@@ -19,7 +19,6 @@
 
 <script>
 import Http from '../config/Http'
-import Cookies from 'js-cookie'
 import Api from '../config/Api'
 
 export default {
@@ -43,8 +42,7 @@ export default {
             this.errors = error.response.data
           })
 
-        if (resp.data !== undefined) {
-          Cookies.set('user-token', resp)
+        if (resp.data.token !== undefined) {
           this.$router.push({name: 'accounting'})
         }
       } catch (e) {

@@ -54,7 +54,7 @@ export default {
         if (r.status === 201) {
           let budget = await Http.get(Api.budget.list)
           console.log('BUDGET', budget)
-          budgetVue.budget = budget.data['data']
+          budgetVue.budget = budget.data
         }
       }).catch(function (error) {
         console.dir(error.response.data)
@@ -64,10 +64,10 @@ export default {
   },
   created: async function () {
     let data = await Http.get(Api.bootUp.getBudgetType)
-    this.budgetType = data.data['data']
+    this.budgetType = data.data
     let budgetList = await Http.get(Api.budget.list)
     console.dir(budgetList)
-    this.budget = budgetList.data['data']
+    this.budget = budgetList.data
   },
   components: {
     Charts
