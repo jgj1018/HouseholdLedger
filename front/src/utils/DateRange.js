@@ -2,7 +2,7 @@ import dateFns from 'date-fns'
 import InvalidDateError from '../errors/InvalidDateError'
 export default {
 
-  getDateRange: function (first, type){
+  getDateRange: function (first, type) {
     let result = {'first': null, 'last': null}
     if (type.toUpperCase() === 'MONTH') {
       result['first'] = dateFns.format(new Date(first), 'YYYY-MM-01')
