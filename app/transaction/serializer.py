@@ -3,11 +3,16 @@ from transaction.models import Transaction
 from home.globals.const import *
 
 class TransactionSerializer(serializers.ModelSerializer):
-    user = serializers.RelatedField
-    credit_type = serializers.SerializerMethodField()
-    debit_type = serializers.SerializerMethodField()
-    created_at = serializers.DateTimeField()
-    updated_at = serializers.DateTimeField()
+
+    user = serializers.RelatedField(
+        read_only=True,
+        default=serializers.CurrentUserDefault()
+    )
+    credit_type = serializers.IntegerField(required=True)
+    debit_type = serializers.IntegerField(required=True)
+    created_at = serializers.DateTimeField(required=False)
+    updated_at = serializers.DateTimeField(required=False)
+
 
     class Meta:
         model = Transaction
@@ -20,7 +25,19 @@ class TransactionSerializer(serializers.ModelSerializer):
                   'created_at',
                   'updated_at',
                   )
-    def get_credit_type(self, obj):
+
+    def to_representation(self, obj):
+        transaction = obj
+
+        return {
+            'transaction_id': transaction.transaction_id,
+            'cost_amount': transaction.cost_amount,
+            'credit_type': self.__get_credit_type(transaction),
+            'debit_type': self.__get_debit_type(transaction),
+            'transaction_name': transaction.transaction_name
+        }
+
+    def __get_credit_type(self, obj):
         if obj.credit_type == 1:
             return credit_type[0]['name']
         elif obj.credit_type == 2:
@@ -28,7 +45,7 @@ class TransactionSerializer(serializers.ModelSerializer):
         elif obj.credit_type == 3:
             return credit_type[2]['name']
 
-    def get_debit_type(self, obj):
+    def __get_debit_type(self, obj):
         if obj.credit_type == 1:
             return debit_type[0]['name']
         elif obj.credit_type == 2:

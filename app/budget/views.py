@@ -14,9 +14,16 @@ class BudgetViewSet(viewsets.ModelViewSet, AuthenticateView):
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = BudgetFilter
 
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
+
     def get_queryset(self):
         user = self.request.user.id
         queryset = functions.filter_by_user_id(Budget.objects, {'user': user})
         return queryset
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 

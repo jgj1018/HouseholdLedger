@@ -16,6 +16,12 @@ def register():
     resp = client.post('/account/registration/', data=APIBasicTests.REGISTRATION_DATA, status_code=200)
     assert resp.status_code == status.HTTP_201_CREATED
 
+def login():
+    client = APIClient()
+
+    resp = client.post('/account/login/', data=APIBasicTests.LOGIN_DATA, status_code=200)
+    assert resp.status_code == status.HTTP_200_OK
+    return resp.data['token']
 class APIBasicTests(TestCase):
     """
     Case #1:
@@ -37,6 +43,11 @@ class APIBasicTests(TestCase):
         "email":EMAIL,
         "password1": PASS,
         "password2": PASS
+    }
+    LOGIN_DATA = {
+        "username": USERNAME,
+        "email":EMAIL,
+        "password": PASS,
     }
 
     REGISTRATION_DATA_WITH_EMAIL = REGISTRATION_DATA.copy()

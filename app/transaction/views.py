@@ -4,11 +4,11 @@ from .serializer import TransactionSerializer
 from rest_framework import viewsets
 from django_filters import rest_framework as filters
 from .filter import TransactionFilter
-from home.views import AuthenticateView
+
 
 
 # Create your views here.
-class TransactionViewSet(viewsets.ModelViewSet, AuthenticateView):
+class TransactionViewSet(viewsets.ModelViewSet):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
     filter_backends = (filters.DjangoFilterBackend,)
@@ -18,4 +18,7 @@ class TransactionViewSet(viewsets.ModelViewSet, AuthenticateView):
         user = self.request.user.id
         queryset = functions.filter_by_user_id(Transaction.objects, {'user': user})
         return queryset
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
