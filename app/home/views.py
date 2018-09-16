@@ -2,7 +2,6 @@ from django.shortcuts import render
 from rest_framework import viewsets
 # Create your views here.
 from django.contrib.auth.models import User
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
@@ -26,7 +25,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
 @api_view(['GET'])
 @authentication_classes((JSONWebTokenAuthentication, ))
-@permission_classes((IsAuthenticated,))
 def transaction_types(request):
     """
     get:
@@ -39,7 +37,6 @@ def transaction_types(request):
 
 @api_view(['GET'])
 @authentication_classes((JSONWebTokenAuthentication, ))
-@permission_classes((IsAuthenticated,))
 def budget_types(request):
     """
     get:
@@ -53,4 +50,3 @@ def budget_types(request):
 
 class AuthenticateView(APIView):
     authentication_classes = (JSONWebTokenAuthentication, )
-    permission_classes = (IsAuthenticated,)
