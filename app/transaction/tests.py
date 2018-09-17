@@ -24,7 +24,9 @@ class TransactionTest(APITestCase):
     @override_settings(REST_USE_JWT=True)
     def test_create_transaction_success(self):
         '''normal success case'''
-        url = resolve_url('/transaction/transaction/')
+        url = reverse('transaction:transaction-list')
+
+
         data = {
 
             "transaction_name": "test",

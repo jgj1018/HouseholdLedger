@@ -46,12 +46,13 @@ urlpatterns = [
     url(r'^account/registration/', include('rest_auth.registration.urls')),
     url(r'^home/$',home_views.home, name='home'),
     url(r'^transaction/', include((transaction_url.urls, 'transaction'),  namespace='transaction'), name='transaction'),
+    url(r'^transaction/', include('transaction.urls')),
     url(r'^budget/', include((budget_url.urls, 'budget'), namespace='budget'), name='budget'),
+    url(r'^budget/', include('budget.urls')),
 
-    url(r'^boot/$',home_views.transaction_types, name='boot'),
-    url(r'^budget-type/$', home_views.budget_types, name='budget_type'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^refresh-token/', refresh_jwt_token),
+
 
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     url(r'^', include(router.urls)),
