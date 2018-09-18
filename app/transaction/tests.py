@@ -1,11 +1,10 @@
-from django.test import TestCase, override_settings, modify_settings
-from rest_framework.test import APITestCase
-from rest_framework import status
+from django.test import override_settings, modify_settings
+from rest_framework.test import APITestCase, APIClient
 from django.shortcuts import resolve_url
 from rest_framework import status
 from django.urls import reverse
 from .models import Transaction
-from home.tests import register
+from home.tests import register, login
 from django.contrib.auth.models import User
 
 
@@ -15,16 +14,21 @@ from django.contrib.auth.models import User
 class TransactionTest(APITestCase):
 
 
+    key=None
+    client = APIClient()
     def setUp(self):
         register()
-        pass
+        self.key= login()
+        self.client.credentials(HTTP_AUTHORIZATION='JWT ' + self.key)
 
     @override_settings(REST_USE_JWT=True)
     def test_create_transaction_success(self):
         '''normal success case'''
-        url = resolve_url('/transaction/transaction/')
+        url = reverse('transaction:transaction-list')
+
+
         data = {
-            "user": 1,
+
             "transaction_name": "test",
             "credit_type": "1",
             "debit_type": "1",
@@ -38,7 +42,7 @@ class TransactionTest(APITestCase):
         data = {
             "transaction_name": "test",
             "credit_type": "1",
-            "debit_type": "1",
+#            "debit_type": "10",
             "cost_amount": 1000
         }
         res = self.client.post(url, data=data)
@@ -47,7 +51,7 @@ class TransactionTest(APITestCase):
 
         '''when transaction_name parameter doesn't exist'''
         data = {
-            "user": 1,
+
             "credit_type": "1",
             "debit_type": "1",
             "cost_amount": 1000
@@ -58,7 +62,7 @@ class TransactionTest(APITestCase):
 
         '''when credit_type parameter doesn't exist'''
         data = {
-            "user": 1,
+
             "transaction_name": "test",
             "debit_type": "1",
             "cost_amount": 1000
@@ -69,7 +73,7 @@ class TransactionTest(APITestCase):
 
         '''when debit_type parameter doesn't exist'''
         data = {
-            "user": 1,
+
             "transaction_name": "test",
             "credit_type": "1",
             "cost_amount": 1000
@@ -80,7 +84,7 @@ class TransactionTest(APITestCase):
 
         '''when cost_amount parameter doesn't exist'''
         data = {
-            "user": 1,
+
             "transaction_name": "test",
             "credit_type": "1",
             "debit_type": "1",
@@ -91,7 +95,7 @@ class TransactionTest(APITestCase):
 
         '''when credit_type is string'''
         data = {
-          "user": 1,
+
           "transaction_name": 'test',
           "credit_type": "test",
           "debit_type": "1",
@@ -103,7 +107,7 @@ class TransactionTest(APITestCase):
 
         '''when debit_type is string'''
         data = {
-          "user": 1,
+
           "transaction_name": 'test',
           "credit_type": "1",
           "debit_type": "test",
@@ -115,7 +119,7 @@ class TransactionTest(APITestCase):
 
         '''when cost_amount is string'''
         data = {
-            "user": 1,
+
             "transaction_name": 'test',
             "credit_type": "1",
             "debit_type": "1",
@@ -129,10 +133,10 @@ class TransactionTest(APITestCase):
     def test_filter_range_budget(self):
         url = reverse('transaction:transaction-list')
         data = {
-            "user": User.objects.first().id,
+
             "transaction_name": "test",
-            "credit_type": "1",
-            "debit_type": "1",
+            "credit_type": 1,
+            "debit_type": 1,
             "cost_amount": 1000
         }
         putresp = self.client.post(url, data=data, status_code=201)

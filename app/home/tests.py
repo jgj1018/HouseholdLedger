@@ -3,8 +3,7 @@ from rest_framework import status
 from rest_framework.test import  APIClient
 from transaction.models import Transaction
 from .globals import functions
-import time
-from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 @modify_settings(MIDDLEWARE={
@@ -16,6 +15,12 @@ def register():
     resp = client.post('/account/registration/', data=APIBasicTests.REGISTRATION_DATA, status_code=200)
     assert resp.status_code == status.HTTP_201_CREATED
 
+def login():
+    client = APIClient()
+
+    resp = client.post('/account/login/', data=APIBasicTests.LOGIN_DATA, status_code=200)
+    assert resp.status_code == status.HTTP_200_OK
+    return resp.data['token']
 class APIBasicTests(TestCase):
     """
     Case #1:
@@ -37,6 +42,11 @@ class APIBasicTests(TestCase):
         "email":EMAIL,
         "password1": PASS,
         "password2": PASS
+    }
+    LOGIN_DATA = {
+        "username": USERNAME,
+        "email":EMAIL,
+        "password": PASS,
     }
 
     REGISTRATION_DATA_WITH_EMAIL = REGISTRATION_DATA.copy()
@@ -75,13 +85,14 @@ class APIBasicTests(TestCase):
         "username": self.USERNAME,
         "password": self.PASS
       }
+      url = reverse('transaction_types')
       resp = self.client.post('/account/login/', data=payload, status_code=200)
       token = resp.data['token']
-      resp2 = self.client.get('/boot/', HTTP_AUTHORIZATION='JWT {}'.format(token))
+      resp2 = self.client.get(url, HTTP_AUTHORIZATION='JWT {}'.format(token))
       self.assertEqual(status.HTTP_200_OK, resp2.status_code)
       # token = resp2.data['token']
 
-      resp3 = self.client.get('/boot/', HTTP_AUTHORIZATION='JWT {}'.format(token))
+      resp3 = self.client.get(url, HTTP_AUTHORIZATION='JWT {}'.format(token))
       self.assertEqual(status.HTTP_200_OK, resp3.status_code)
 
       # for i in range(0, 5):

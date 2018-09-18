@@ -3,7 +3,10 @@ from .models import  Budget
 from home.globals import const
 
 class BudgetSerializer(serializers.ModelSerializer):
-    user = serializers.RelatedField
+    user = serializers.RelatedField(
+        read_only=True,
+        default=serializers.CurrentUserDefault()
+    )
 
     class Meta:
         model = Budget

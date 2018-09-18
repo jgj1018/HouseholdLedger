@@ -14,9 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from rest_framework import routers
-from .views import TransactionViewSet
+from .views import TransactionViewSet, transaction_types
+from django.conf.urls import url
 
+
+
+urlpatterns = [
+    url(r'^types$', transaction_types, name='transaction_types')
+
+]
 
 router = routers.DefaultRouter()
-router.register(r'transaction', TransactionViewSet)
+router.register(r'', TransactionViewSet, base_name='transaction')
 
