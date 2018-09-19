@@ -7,24 +7,22 @@ const account = {
   refreshToken: '/refresh-token/'
 }
 
-const bootUp = {
-  boot: '/boot/',
-  getBudgetType: '/budget-type/'
-}
-
 const accounting = {
-  transaction: '/transaction/transaction/',
-  inputTransaction: '/transaction/transaction/'
+  list: '/transaction/',
+  'delete': '/transaction/',
+  create: '/transaction/',
+  transactionTypes: '/transaction/types'
+
 }
 
 const budget = {
-  create: '/budget/budget/',
-  list: '/budget/budget/'
-
+  create: '/budget/',
+  list: '/budget/',
+  getTypes: '/budget/types'
 }
+
 const Api = {
   account: concatHost(account),
-  bootUp: concatHost(bootUp),
   accounting: concatHost(accounting),
   budget: concatHost(budget)
 }
