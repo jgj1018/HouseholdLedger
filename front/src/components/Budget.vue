@@ -63,7 +63,7 @@ export default {
     }
   },
   created: async function () {
-    let data = await Http.get(Api.bootUp.getBudgetType)
+    let data = await Http.get(Api.budget.getTypes)
     this.budgetType = data.data
     let budgetList = await Http.get(Api.budget.list)
     console.dir(budgetList)

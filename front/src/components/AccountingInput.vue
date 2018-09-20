@@ -45,7 +45,7 @@ export default {
       }
       let transAction = new Transaction(transactionName, creditType, debitType, costAmount)
       try {
-        let param = await Http.post(Api.accounting.inputTransaction, transAction)
+        let param = await Http.post(Api.accounting.create, transAction)
         this.$emit('renew-book', param)
       } catch (e) {
         console.log('err', e)
