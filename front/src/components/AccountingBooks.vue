@@ -31,7 +31,7 @@
             <td>{{ record.debit_type }}</td>
             <td>{{ record.credit_type }}</td>
             <td>
-              <button type="button" v-on:click="updateTrns(record.transaction_id)">Update</button>
+              <button type="button" v-on:click="updateTrns(record.transaction_id, record.transaction_name, record.cost_amount)">Update</button>
               <button type="button" v-on:click="deleteTrns(record.transaction_id)">Delete</button>
             </td>
           </tr>
@@ -41,6 +41,7 @@
       </table>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -51,13 +52,28 @@ import Api from '../config/Api'
 
 export default {
   name: 'AccountingBooks',
+  components: {
+    TransactionType,
+    AccountingInput
+  },
   methods: {
     renewBook: async function () {
       let result = await Http.get(Api.accounting.list)
       this.accountings = result.data
     },
-    updateTrns: function (event) {
-      alert('test')
+    updateTrns: function (trnsId, trnsName, costAmount, event) {
+      this.$modal.show({
+        template: `
+<b>{{transaction_id}}</b>
+`,
+        props: ['transaction_id']
+      }, {
+        transaction_id: trnsId,
+      }, {
+        width: 300,
+        height: 300
+      }, {
+      })
     },
     deleteTrns: function (trnsId, event) {
       Http.delete(Api.accounting.delete + trnsId)
@@ -76,9 +92,6 @@ export default {
     let types = await Http.get(Api.accounting.transactionTypes)
     this.transactionTypes = types.data
     this.renewBook()
-  },
-  components: {
-    TransactionType, AccountingInput
   }
 }
 </script>
