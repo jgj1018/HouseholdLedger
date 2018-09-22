@@ -14,9 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from rest_framework import routers
-from .views import  BudgetViewSet
-
+from .views import  BudgetViewSet, budget_types
+from django.conf.urls import url
 
 router = routers.DefaultRouter()
-router.register(r'budget', BudgetViewSet, base_name='budget')
+urlpatterns = [
+    url(r'^types$', budget_types, name='budget_types')
 
+]
+
+router.register(r'', BudgetViewSet, base_name='budget')

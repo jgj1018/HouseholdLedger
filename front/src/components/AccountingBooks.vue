@@ -53,17 +53,17 @@ export default {
   name: 'AccountingBooks',
   methods: {
     renewBook: async function () {
-      let result = await Http.get(Api.accounting.transaction)
+      let result = await Http.get(Api.accounting.list)
       this.accountings = result.data
     },
     updateTrns: function (event) {
       alert('test')
     },
-    deleteTrns: function (trns_id, event) {
-      Http.delete(Api.accounting.transaction + trns_id)
+    deleteTrns: function (trnsId, event) {
+      Http.delete(Api.accounting.delete + trnsId)
         .then(response => {
           this.renewBook()
-        });
+        })
     }
   },
   data () {
@@ -73,7 +73,7 @@ export default {
     }
   },
   created: async function () {
-    let types = await Http.get(Api.bootUp.boot)
+    let types = await Http.get(Api.accounting.transactionTypes)
     this.transactionTypes = types.data
     this.renewBook()
   },

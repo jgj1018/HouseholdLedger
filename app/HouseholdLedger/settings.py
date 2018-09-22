@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import datetime
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -40,6 +39,7 @@ INSTALLED_APPS = [
     # RestFul FrameWork Swagger
     'rest_framework_swagger',
     'rest_auth',
+    'drf_yasg',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     # application list
     'home',
     'transaction',
-    'budget'
+    'budget',
 ]
 
 MIDDLEWARE = [
@@ -146,7 +146,7 @@ LOGIN_REDIRECT_URL = '/account/login'
 
 # Configure the JWTs to expire after 1 hour, and allow users to refresh near-expiration tokens
 JWT_AUTH = {
-  'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=10),
+  'JWT_EXPIRATION_DELTA': datetime.timedelta(minutes=10),
   'JWT_ALLOW_REFRESH': True,
 
 }
@@ -158,6 +158,9 @@ REST_FRAMEWORK = {
   ),
   'DEFAULT_FILTER_BACKENDS': (
     'django_filters.rest_framework.DjangoFilterBackend',
+  ),
+  'DEFAULT_PERMISSION_CLASSES': (
+   'rest_framework.permissions.IsAuthenticated',
   ),
   'DATETIME_FORMAT': "%Y-%m-%d",
 }

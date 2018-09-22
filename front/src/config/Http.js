@@ -37,9 +37,14 @@ axios.interceptors.response.use(function (response) {
 
   return response
 }, function (error) {
-  if (error.response.status === 400) {
+  if (error.response.status === 401) {
     Cookies.remove('user-token')
     Router.push({name: 'login'})
+  } else {
+    let token = Cookies.get('user-token')
+    if (!checkTokenExpiration(token)) {
+      Cookies.set('user-token', token)
+    }
   }
 })
 
@@ -85,5 +90,4 @@ export default {
   },
   'refreshToken': refreshToken,
   'checkTokenExpiration': checkTokenExpiration
-
 }

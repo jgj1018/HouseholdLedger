@@ -2,8 +2,6 @@ from django.shortcuts import render
 from rest_framework import viewsets
 # Create your views here.
 from django.contrib.auth.models import User
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from home.serializer import UserSerializer
@@ -24,33 +22,3 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
-@api_view(['GET'])
-@authentication_classes((JSONWebTokenAuthentication, ))
-@permission_classes((IsAuthenticated,))
-def transaction_types(request):
-    """
-    get:
-        get TransactionTypeData
-    """
-    if request.method == 'GET':
-        transaction_type = const.transaction_type
-        return Response(transaction_type)
-
-
-@api_view(['GET'])
-@authentication_classes((JSONWebTokenAuthentication, ))
-@permission_classes((IsAuthenticated,))
-def budget_types(request):
-    """
-    get:
-        get BudgetTypeData
-    """
-    if request.method == 'GET':
-        budget_type = const.budget_type
-
-        return Response(budget_type)
-
-
-class AuthenticateView(APIView):
-    authentication_classes = (JSONWebTokenAuthentication, )
-    permission_classes = (IsAuthenticated,)
