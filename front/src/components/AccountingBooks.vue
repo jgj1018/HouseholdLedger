@@ -31,7 +31,7 @@
             <td>{{ record.debit_type }}</td>
             <td>{{ record.credit_type }}</td>
             <td>
-              <button type="button" v-on:click="updateTrns(record.transaction_id, record.transaction_name, record.cost_amount)">Update</button>
+              <button type="button" v-on:click="showModalForUpdate(record.transaction_id)">Update</button>
               <button type="button" v-on:click="deleteTrns(record.transaction_id)">Delete</button>
             </td>
           </tr>
@@ -40,6 +40,10 @@
         </div>
       </table>
     </div>
+    <TrnsUpdateModal
+      v-show="isModalVisible"
+      @close="closeModal"
+    />
   </div>
 
 </template>
@@ -49,31 +53,25 @@ import AccountingInput from './AccountingInput'
 import TransactionType from '../slot/TransactionType'
 import Http from '../config/Http'
 import Api from '../config/Api'
+import TrnsUpdateModal from './TransactionUpdateModal'
 
 export default {
   name: 'AccountingBooks',
   components: {
     TransactionType,
-    AccountingInput
+    AccountingInput,
+    TrnsUpdateModal
   },
   methods: {
     renewBook: async function () {
       let result = await Http.get(Api.accounting.list)
       this.accountings = result.data
     },
-    updateTrns: function (trnsId, trnsName, costAmount, event) {
-      this.$modal.show({
-        template: `
-<b>{{transaction_id}}</b>
-`,
-        props: ['transaction_id']
-      }, {
-        transaction_id: trnsId,
-      }, {
-        width: 300,
-        height: 300
-      }, {
-      })
+    showModalForUpdate: function (trnsId, event) {
+      this.isModalVisible = true
+    },
+    closeModal: function (event) {
+      this.isModalVisible = false
     },
     deleteTrns: function (trnsId, event) {
       Http.delete(Api.accounting.delete + trnsId)
@@ -84,6 +82,7 @@ export default {
   },
   data () {
     return {
+      isModalVisible: false,
       accountings: [],
       transactionTypes: []
     }
