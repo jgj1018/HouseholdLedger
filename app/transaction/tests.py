@@ -130,7 +130,7 @@ class TransactionTest(APITestCase):
         self.assertEqual(Transaction.objects.count(), 1)
 
     @override_settings(REST_USE_JWT=True)
-    def test_filter_range_budget(self):
+    def test_filter_range_transaction(self):
         url = reverse('transaction:transaction-list')
         data = {
 
@@ -153,3 +153,48 @@ class TransactionTest(APITestCase):
         self.assertEqual(len(response2.data), 0)
 
 
+    @override_settings(REST_USE_JWT=True)
+    def test_update_transaction(self):
+        create_url = reverse('transaction:transaction-list')
+        data = {
+
+            "transaction_name": "test",
+            "credit_type": 1,
+            "debit_type": 1,
+            "cost_amount": 1000
+        }
+        postresp = self.client.post(create_url, data=data, status_code=201)
+        self.assertEqual(postresp.status_code, status.HTTP_201_CREATED)
+
+        first_transaction = Transaction.objects.first()
+        update_url = reverse('transaction:transaction-detail', kwargs={'pk': first_transaction.transaction_id})
+        update_data = {
+            'transaction_name': 'test22'
+        }
+        putresp = self.client.patch(update_url, data=update_data, status_code=status.HTTP_200_OK)
+        updated_first_transaction = Transaction.objects.first()
+        self.assertEqual('test22', updated_first_transaction.transaction_name)
+
+        new_register_id = {
+        "username": 'username',
+        "email": 'user@name.com',
+        "password1": 'gring21!',
+        "password2": 'gring21!'
+        }
+
+        resp = self.client.post('/account/registration/', data=new_register_id, status_code=200)
+        new_login_data = {
+            "username": 'username',
+            "email": 'user@name.com',
+            "password": 'gring21!',
+        }
+        log_out_resp = self.client.post('/account/logout', status_code=200)
+
+        login_resp = self.client.post('/account/login/', data=new_login_data, status_code=200)
+        self.client.credentials(HTTP_AUTHORIZATION='JWT ' + login_resp.data['token'])
+        fail_update_url = reverse('transaction:transaction-detail', kwargs={'pk': first_transaction.transaction_id})
+        fail_update_data = {
+            'transaction_name': 'fail'
+        }
+        fail_resp = self.client.patch(fail_update_url, data=fail_update_data, status_code=status.HTTP_200_OK)
+        self.assertEqual(fail_resp.status_code, status.HTTP_404_NOT_FOUND)

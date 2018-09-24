@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from home.globals import const
 from rest_framework.response import Response
-
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 class TransactionViewSet(viewsets.ModelViewSet):
@@ -19,11 +19,19 @@ class TransactionViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user.id
-        queryset = functions.filter_by_user_id(Transaction.objects, {'user': user})
+        queryset = functions.filter_by_params(Transaction.objects, {'user': user})
         return queryset
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    def partial_update(self, request, *args, **kwargs):
+        transaction = get_object_or_404(Transaction, user= self.request.user.id, transaction_id= kwargs['pk'])
+        serializer = TransactionSerializer(transaction, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
 
 
 @api_view(['GET'])

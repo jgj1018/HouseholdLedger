@@ -3,7 +3,7 @@ from .models import  Budget
 from home.globals import const
 
 class BudgetSerializer(serializers.ModelSerializer):
-    user = serializers.RelatedField(
+    user = serializers.PrimaryKeyRelatedField(
         read_only=True,
         default=serializers.CurrentUserDefault()
     )

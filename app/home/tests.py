@@ -106,7 +106,7 @@ class APIBasicTests(TestCase):
 class GlobalObjTest(TestCase):
 
     def test_filter_by_user_id_query_has_where_user_id(self):
-        query_set = functions.filter_by_user_id(Transaction.objects, {'user': 1})
+        query_set = functions.filter_by_params(Transaction.objects, {'user': 1})
         query = query_set.query.__str__()
         self.assertIn('WHERE', query)
 
