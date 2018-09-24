@@ -41,8 +41,10 @@
       </table>
     </div>
     <TrnsUpdateModal
-      v-show="isModalVisible"
+      v-if="isModalVisible"
       @close="closeModal"
+      @renewBook="renewBook"
+      :transactionId="updateTransactionId"
     />
   </div>
 
@@ -62,6 +64,16 @@ export default {
     AccountingInput,
     TrnsUpdateModal
   },
+
+  data () {
+    return {
+      isModalVisible: false,
+      accountings: [],
+      transactionTypes: [],
+      updateTransactionId: null
+    }
+  },
+
   methods: {
     renewBook: async function () {
       let result = await Http.get(Api.accounting.list)
@@ -69,6 +81,7 @@ export default {
     },
     showModalForUpdate: function (trnsId, event) {
       this.isModalVisible = true
+      this.updateTransactionId = trnsId
     },
     closeModal: function (event) {
       this.isModalVisible = false
@@ -80,13 +93,7 @@ export default {
         })
     }
   },
-  data () {
-    return {
-      isModalVisible: false,
-      accountings: [],
-      transactionTypes: []
-    }
-  },
+
   created: async function () {
     let types = await Http.get(Api.accounting.transactionTypes)
     this.transactionTypes = types.data

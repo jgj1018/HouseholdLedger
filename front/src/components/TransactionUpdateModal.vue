@@ -57,13 +57,24 @@ import Api from '../config/Api'
 
 export default {
   name: 'TrnsUpdateModal',
+  props: ['transactionId'],
   methods: {
     updateTrns: function (event) {
       let trnsName = this.$refs.trns_name.value
-      let costAmount = this.$refs.cost_amount.value
-      Http.post(Api.accounting.update, { transaction_id: 9, transaction_name: trnsName, cost_amount: costAmount })
+      let costAmount = Number.parseFloat(this.$refs.cost_amount.value)
+      let data = {}
+
+      if (trnsName !== null && trnsName !== undefined && trnsName.length > 0) {
+        data['transaction_name'] = trnsName
+      }
+      if (costAmount !== null && costAmount !== undefined && Number.isInteger(costAmount)) {
+        data['cost_amount'] = costAmount
+      }
+
+      Http.patch(Api.accounting.update + this.transactionId + '/', data)
         .then(response => {
-          this.$emit('renew-book')
+          this.$emit('close')
+          this.$emit('renewBook')
         })
     },
     closeModal: function (event) {
