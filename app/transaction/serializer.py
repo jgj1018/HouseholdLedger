@@ -1,16 +1,17 @@
 from rest_framework import serializers
 from transaction.models import Transaction
 from home.globals.const import *
+from rest_framework.settings import api_settings
 
 class TransactionSerializer(serializers.ModelSerializer):
 
-    user = serializers.RelatedField(
+    user = serializers.PrimaryKeyRelatedField(
         read_only=True,
         default=serializers.CurrentUserDefault()
     )
     credit_type = serializers.IntegerField(required=True)
     debit_type = serializers.IntegerField(required=True)
-    created_at = serializers.DateTimeField(required=False)
+    created_at = serializers.DateTimeField(required=False, read_only=True, format=api_settings.DATETIME_FORMAT)
     updated_at = serializers.DateTimeField(required=False)
 
 
@@ -26,17 +27,12 @@ class TransactionSerializer(serializers.ModelSerializer):
                   'updated_at',
                   )
 
-    def to_representation(self, obj):
-        transaction = obj
+    def to_representation(self, instance):
+        ret =  super().to_representation(instance)
+        ret['credit_type'] = self.__get_credit_type(instance)
+        ret['debit_type'] = self.__get_debit_type(instance)
 
-        return {
-            'transaction_id': transaction.transaction_id,
-            'cost_amount': transaction.cost_amount,
-            'credit_type': self.__get_credit_type(transaction),
-            'debit_type': self.__get_debit_type(transaction),
-            'transaction_name': transaction.transaction_name
-        }
-
+        return ret
     def __get_credit_type(self, obj):
         if obj.credit_type == 1:
             return credit_type[0]['name']

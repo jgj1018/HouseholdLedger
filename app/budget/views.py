@@ -23,7 +23,7 @@ class BudgetViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user.id
-        queryset = functions.filter_by_user_id(Budget.objects, {'user': user})
+        queryset = functions.filter_by_params(Budget.objects, {'user': user})
         return queryset
 
     def perform_create(self, serializer):

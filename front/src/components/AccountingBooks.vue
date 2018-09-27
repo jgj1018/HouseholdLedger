@@ -31,7 +31,7 @@
             <td>{{ record.debit_type }}</td>
             <td>{{ record.credit_type }}</td>
             <td>
-              <button type="button" v-on:click="updateTrns(record.transaction_id)">Update</button>
+              <button type="button" v-on:click="showModalForUpdate(record.transaction_id)">Update</button>
               <button type="button" v-on:click="deleteTrns(record.transaction_id)">Delete</button>
             </td>
           </tr>
@@ -40,7 +40,14 @@
         </div>
       </table>
     </div>
+    <TrnsUpdateModal
+      v-if="isModalVisible"
+      @close="closeModal"
+      @renewBook="renewBook"
+      :transactionId="updateTransactionId"
+    />
   </div>
+
 </template>
 
 <script>
@@ -48,16 +55,36 @@ import AccountingInput from './AccountingInput'
 import TransactionType from '../slot/TransactionType'
 import Http from '../config/Http'
 import Api from '../config/Api'
+import TrnsUpdateModal from './TransactionUpdateModal'
 
 export default {
   name: 'AccountingBooks',
+  components: {
+    TransactionType,
+    AccountingInput,
+    TrnsUpdateModal
+  },
+
+  data () {
+    return {
+      isModalVisible: false,
+      accountings: [],
+      transactionTypes: [],
+      updateTransactionId: null
+    }
+  },
+
   methods: {
     renewBook: async function () {
       let result = await Http.get(Api.accounting.list)
       this.accountings = result.data
     },
-    updateTrns: function (event) {
-      alert('test')
+    showModalForUpdate: function (trnsId, event) {
+      this.isModalVisible = true
+      this.updateTransactionId = trnsId
+    },
+    closeModal: function (event) {
+      this.isModalVisible = false
     },
     deleteTrns: function (trnsId, event) {
       Http.delete(Api.accounting.delete + trnsId)
@@ -66,19 +93,11 @@ export default {
         })
     }
   },
-  data () {
-    return {
-      accountings: [],
-      transactionTypes: []
-    }
-  },
+
   created: async function () {
     let types = await Http.get(Api.accounting.transactionTypes)
     this.transactionTypes = types.data
     this.renewBook()
-  },
-  components: {
-    TransactionType, AccountingInput
   }
 }
 </script>

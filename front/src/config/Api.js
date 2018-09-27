@@ -9,7 +9,8 @@ const account = {
 
 const accounting = {
   list: '/transaction/',
-  'delete': '/transaction/',
+  delete: '/transaction/',
+  update: '/transaction/',
   create: '/transaction/',
   transactionTypes: '/transaction/types'
 
